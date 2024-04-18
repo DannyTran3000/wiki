@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki Portal - The Free Encyclopedia</title>
+
+  <link rel="stylesheet" href="./css/input-group/index.css">
+  <link rel="stylesheet" href="./css/search-box/index.css">
+
+  <link rel="stylesheet" href="./css/hero/index.css">
+  <link rel="stylesheet" href="./css/login-form/index.css">
+
+  <link rel="stylesheet" href="./css/header/index.css">
+  <link rel="stylesheet" href="./css/modal/index.css">
+
+  <link rel="stylesheet" href="./css/index.css">
+
+</head>
+
+<body>
+  <div id="home" class="wrapper">
+    <header class="header">
+      <nav class="header__nav">
+        <ul class="header__nav-list" data-align="start">
+          <li class="header__nav-item header__nav-item--active"><a href="/" class="header__nav-link">Home</a></li>
+          <li class="header__nav-item"><a href="/categories" class="header__nav-link">Categories</a></li>
+          <li class="header__nav-item"><a href="/articles" class="header__nav-link">Articles</a></li>
+        </ul>
+        <ul class="header__nav-list" data-align="end">
+          <li class="header__nav-item"><a href="javascript:void(0);" class="header__nav-link"
+              onclick="showModal('register-modal')">Create an account</a></li>
+          <li class="header__nav-item"><a href="javascript:void(0);" class="header__nav-link"
+              onclick="showModal('login-modal')">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero__container">
+          <div class="hero__logo">
+            <img src="./images/logo.png" alt="Wiki Portal Logo">
+          </div>
+          <div class="hero__heading">
+            <h1>Wiki Portal</h1>
+          </div>
+          <div class="hero__slogan">
+            <b>The Free Encyclopedia</b>
+          </div>
+          <div class="hero__input">
+            <div class="search-box">
+              <div class="search-box__pre-icon">
+                <svg width="37" height="39" viewBox="0 0 37 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M27.1322 15.1099C27.1322 21.8062 21.7218 27.2197 15.0661 27.2197C8.41038 27.2197 3 21.8062 3 15.1099C3 8.41356 8.41038 3 15.0661 3C21.7218 3 27.1322 8.41356 27.1322 15.1099ZM23.0749 27.9104C20.7549 29.3735 18.009 30.2197 15.0661 30.2197C6.74532 30.2197 0 23.4548 0 15.1099C0 6.76492 6.74532 0 15.0661 0C23.3869 0 30.1322 6.76492 30.1322 15.1099C30.1322 19.4148 28.3371 23.2993 25.4566 26.0514L35.7949 36.4616L33.6809 38.5903L23.0749 27.9104Z"
+                    fill="#C4C4C4" />
+                </svg>
+              </div>
+              <input id="search-box" type="text" class="search-box__input"
+                placeholder="Hello world from Wiki Portal ...">
+            </div>
+          </div>
+        </div>
+        <div class="hero__banner">
+          <img src="./images/hero-world.png" alt="Wiki Portal Ex-logo">
+        </div>
+      </section>
+      <div id="login-modal" class="modal" data-toggle="false" onclick="hideModal('login-modal')">
+        <div class="modal__dialog" onclick="event.stopPropagation()">
+          <form id="login-form" onsubmit="return login()">
+            <div class="login-form">
+              <div class="login-form__header">
+                <img class="login-form__logo" src="./images/logo.png" alt="Wiki Portal Logo">
+                <h5 class="login-form__heading">Login to your Account</h5>
+                <span class="login-form__description">Welcome back, please enter your details.</span>
+              </div>
+              <div class="login-form__content">
+                <div class="input-group login-form__input-group">
+                  <label>Email Address</label>
+                  <input type="text" name="email">
+                  <span class="input-group__note"></span>
+                </div>
+                <div class="input-group input-group--action login-form__input-group">
+                  <label>Password</label>
+                  <input type="password" name="password">
+                  <span class="input-group__trigger-password" data-toggle="false">Show</span>
+                </div>
+                <div class="checkbox-group login-form__input-group">
+                  <input type="checkbox" name="remember" id="remember-login-checkbox">
+                  <label for="remember-login-checkbox">Remember me</label>
+                </div>
+              </div>
+              <div class="login-form__footer">
+                <button class="login-form__submit" type="submit">Login</button>
+                <p class="login-form__credit">Don't have an account? <b
+                    onclick="switchModal('login-modal', 'register-modal')">Sign Up</b></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="register-modal" class="modal" data-toggle="false" onclick="hideModal('register-modal')">
+        <div class="modal__dialog" onclick="event.stopPropagation()">
+          <div class="login-form">
+            <div class="login-form__header">
+              <img class="login-form__logo" src="./images/logo.png" alt="Wiki Portal Logo">
+              <h5 class="login-form__heading">Create an Account</h5>
+              <span class="login-form__description">Sign up now to get started with an account.</span>
+            </div>
+            <div class="login-form__content">
+              <form>
+                <div class="input-group login-form__input-group">
+                  <label>Full Name <b style="color: red">*</b></label>
+                  <input type="text" name="email">
+                </div>
+                <div class="input-group login-form__input-group">
+                  <label>Email Address <b style="color: red">*</b></label>
+                  <input type="text" name="email">
+                </div>
+                <div class="input-group input-group--action login-form__input-group">
+                  <label>Password <b style="color: red">*</b></label>
+                  <input type="password" name="password">
+                  <span class="input-group__trigger-password" data-toggle="false">Show</span>
+                </div>
+                <div class="input-group input-group--action login-form__input-group">
+                  <label>Confirm Password <b style="color: red">*</b></label>
+                  <input type="password" name="password">
+                  <span class="input-group__trigger-password" data-toggle="false">Show</span>
+                </div>
+              </form>
+            </div>
+            <div class="login-form__footer">
+              <button class="login-form__submit">Get Started</button>
+              <p class="login-form__credit">Already have an account? <b
+                  onclick="switchModal('register-modal', 'login-modal')">Login</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="./js/fetch.js"></script>
+  <script src="./js/form.js"></script>
+  <script src="./js/input.js"></script>
+  <script src="./js/modal.js"></script>
+</body>
+
+</html>
