@@ -48,6 +48,32 @@
     &:hover {
       background: #222;
     }
+
+    &[data-loading="true"] {
+      position: relative;
+
+      color: transparent;
+
+      &::before {
+        position: absolute;
+        top: calc(50% - 0.7rem);
+        left: calc(50% - 0.7rem);
+
+        width: 1.4rem;
+        height: 1.4rem;
+
+        border: 0.4rem solid #fff;
+        border-left-color: transparent;
+        border-radius: 50%;
+
+        content: "";
+
+        animation-name: spinner;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+    }
   }
 
   &__credit {

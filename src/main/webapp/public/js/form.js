@@ -23,9 +23,24 @@ const login = () => {
     email: emailInput?.value,
     password: passwordInput?.value,
   }
-  console.log(data)
 
-  sendRequest('http://localhost:8080/wiki-portal/login', 'post', JSON.stringify(data), (data) => console.log(data))
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+  const submitBtn = form.querySelector('button[type="submit"]')
+  if (submitBtn) submitBtn.setAttribute('data-loading', 'true')
+
+  sendRequest(
+    'http://localhost:8080/wiki-portal/login',
+    'POST',
+    JSON.stringify(data),
+    (data) => {
+      setTimeout(() => {
+        body.setAttribute('data-loading', 'false')
+        if (submitBtn) submitBtn.setAttribute('data-loading', 'false')
+      }, 1500)
+
+      console.log(data)
+    })
 
   return false
 }
