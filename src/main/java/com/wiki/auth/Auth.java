@@ -1,27 +1,35 @@
 package com.wiki.auth;
 
 import java.security.NoSuchAlgorithmException;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.crypto.SecretKey;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.wiki.helpers.CryptoHelper;
 import com.wiki.helpers.DateTimeHelper;
 import com.wiki.helpers.ValidationHelper;
-import com.wiki.interfaces.user.UserInstance;
-import com.wiki.interfaces.user.UserMeta;
+import com.wiki.interfaces.UserData;
 import com.wiki.models.UserModel;
 
 public class Auth {
-  public static UserMeta login(String email, String password) throws Exception {
-    // Query the database to retrieve user information based on email
-    UserModel user = UserModel.getUserByEmail(email);
+  public static UserData login(String email, String password) throws Exception {
+    UserModel user = null;
+
+    try {
+      user = UserModel.getUserByEmail(email);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println("Error: " + e.getMessage());
+    }
+
     // Checks if the given email already exists in the database
     if (user == null) {
       String msg = "This email does not exist.";
       System.out.println("Warning: " + msg);
-      return new UserMeta(null, 404, "Warning", msg);
+      return new UserData(null, 404, "Warning", msg);
     }
 
     // Encodes user salt into a cryptographic key
@@ -33,7 +41,7 @@ public class Auth {
     if (!encryptedPassword.equals(user.password)) {
       String msg = "The password you entered is incorrect. Please try again.";
       System.out.println("Warning: " + msg);
-      return new UserMeta(null, 401, "Warning", msg);
+      return new UserData(null, 401, "Warning", msg);
     }
 
     // Get current time
@@ -45,9 +53,9 @@ public class Auth {
     UserModel.setAccessTokenById(user.id, accessToken);
 
     // Gather information for the return process.
-    UserInstance data = new UserInstance(user.id, user.fullname, user.email, accessToken, user.role);
+    String jsonData = jsonParseUserData(user.fullname, user.email, accessToken, user.role);
 
-    return new UserMeta(data, 200, "Message", "You have successfully logged in! Welcome back!");
+    return new UserData(jsonData, 200, "Success", "You have successfully logged in! Welcome back!");
   }
 
   public static int register(String fullname, String email, String password) throws Exception {
@@ -84,13 +92,25 @@ public class Auth {
 
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
+      System.err.println("Error: " + e.getMessage());
     }
 
     return 0;
   }
 
-  public static UserInstance isAuthenticated(String token) throws SQLException {
-    return UserModel.getUserByAccessToken(token);
+  public static String isAuthenticated(String token) throws SQLException {
+    ResultSet resultSet = UserModel.getUserByAccessToken(token);
+
+    String jsonData = null;
+    while (resultSet.next()) {
+      jsonData = jsonParseUserData(
+          resultSet.getString("fullname"),
+          resultSet.getString("email"),
+          resultSet.getString("access_token"),
+          resultSet.getInt("role"));
+    }
+
+    return jsonData;
   }
 
   private static boolean validateDataRegister(String email, String password) {
@@ -99,5 +119,15 @@ public class Auth {
       return false;
 
     return true;
+  }
+
+  private static String jsonParseUserData(String fullname, String email, String accessToken, int role) {
+    JsonObject data = new JsonObject();
+    data.addProperty("fullname", fullname);
+    data.addProperty("email", email);
+    data.addProperty("accessToken", accessToken);
+    data.addProperty("role", role);
+    Gson gson = new Gson();
+    return gson.toJson(data);
   }
 }

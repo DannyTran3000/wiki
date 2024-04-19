@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.wiki.config.Database;
-import com.wiki.interfaces.user.UserInstance;
 
 public class UserModel {
   public int id, role;
@@ -29,21 +28,9 @@ public class UserModel {
     return Database.update(statement, fullname, email.toLowerCase(), password, salt, currentTime);
   }
 
-  public static UserInstance getUserByAccessToken(String token) throws SQLException {
+  public static ResultSet getUserByAccessToken(String token) throws SQLException {
     String statement = "SELECT * FROM user WHERE access_token = ? LIMIT 1";
-    ResultSet res = Database.query(statement, token);
-
-    UserInstance user = null;
-    while (res.next()) {
-      user = new UserInstance(
-          res.getInt("id"),
-          res.getString("fullname"),
-          res.getString("email"),
-          res.getString("access_token"),
-          res.getInt("role"));
-    }
-
-    return user;
+    return Database.query(statement, token);
   }
 
   public static UserModel getUserByEmail(String email) throws SQLException {

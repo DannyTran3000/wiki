@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wiki Portal - The Free Encyclopedia</title>
 
-  <%@ include file="../molecules/Links.jsp" %>
+  <%@ include file="../molecules/meta/Links.jsp" %>
 </head>
 
 <body>
@@ -15,10 +15,11 @@
       <main>
         <%@ include file="../organisms/Hero.jsp" %>
       </main>
-      <%@ include file="../molecules/Modals.jsp" %>
+      <%@ include file="../molecules/modals/RegisterModal.jsp" %>
+      <%@ include file="../molecules/modals/LoginModal.jsp" %>
   </div>
 
-  <%@ include file="../molecules/Scripts.jsp" %>
+  <%@ include file="../molecules/meta/Scripts.jsp" %>
 </body>
 
 </html>

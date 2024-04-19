@@ -14,5 +14,12 @@
     <servlet-name>HomeServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <!-- MAPPING -->
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
 </web-app>

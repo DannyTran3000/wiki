@@ -8,7 +8,6 @@ const login = () => {
 
   const emailInput = form.querySelector('input[name="email"]')
   const passwordInput = form.querySelector('input[name="password"]')
-  const rememberCheckbox = form.querySelector('input[name="remember"]')
 
   const isValidEmail = validateEmail(emailInput?.value)
 
@@ -23,9 +22,10 @@ const login = () => {
   const data = {
     email: emailInput?.value,
     password: passwordInput?.value,
-    rememberMe: rememberCheckbox?.checked ? 1 : 0,
   }
   console.log(data)
+
+  sendRequest('http://localhost:8080/wiki-portal/login', 'post', JSON.stringify(data), (data) => console.log(data))
 
   return false
 }

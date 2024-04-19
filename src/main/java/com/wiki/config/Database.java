@@ -15,6 +15,7 @@ public class Database {
 			con = DriverManager.getConnection(Config.DB_URL, Config.DB_USERNAME, Config.DB_PASSWORD);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.err.println("Error: " + e.getMessage());
 		}
 	}
 
