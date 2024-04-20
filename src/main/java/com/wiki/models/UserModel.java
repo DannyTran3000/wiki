@@ -58,7 +58,7 @@ public class UserModel {
   }
 
   public static void setAccessTokenById(int id, String token) throws SQLException {
-    String statement = "UPDATE user SET access_token = ?";
-    Database.update(statement, token);
+    String statement = "UPDATE user SET access_token = ? WHERE id = ?";
+    Database.update(statement, token, id);
   }
 }

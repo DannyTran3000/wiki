@@ -10,8 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.wiki.helpers.CryptoHelper;
 import com.wiki.helpers.DateTimeHelper;
-import com.wiki.helpers.ValidationHelper;
 import com.wiki.interfaces.UserData;
+import com.wiki.interfaces.UserPublicData;
 import com.wiki.models.UserModel;
 
 public class Auth {
@@ -46,7 +46,7 @@ public class Auth {
 
     // Get current time
     String currentTime = DateTimeHelper.getCurrentDateTime();
-    String combinationString = user.email + "==" + encryptedPassword + "==" + currentTime;
+    String combinationString = user.id + "==" + currentTime;
     String accessToken = CryptoHelper.encrypt(combinationString, userKey);
 
     // update access_token in user table
@@ -58,21 +58,15 @@ public class Auth {
     return new UserData(jsonData, 200, "Success", "You have successfully logged in! Welcome back!");
   }
 
-  public static int register(String fullname, String email, String password) throws Exception {
+  public static UserData register(String fullname, String email, String password) throws Exception {
     try {
-      // Validate user input data before proceeding with registration
-      boolean isValidInput = validateDataRegister(email, password);
-      if (!isValidInput) {
-        System.out.println("Warning: Input data is invalid.");
-        return 0;
-      }
-
       // Check if the email is unique (not already registered) before proceeding with
       // registration
       UserModel user = UserModel.getUserByEmail(email);
       if (user != null) {
-        System.out.println("Warning: This email has already been registered.");
-        return 0;
+        String msg = "This email has already been registered.";
+        System.out.println("Warning: " + msg);
+        return new UserData(null, 409, "Warning", msg);
       }
 
       // Generate a unique secret key for new user
@@ -86,39 +80,47 @@ public class Auth {
       // Insert new user
       int res = UserModel.insertUser(fullname, email, encryptedPassword, salt, currentTime);
 
-      System.out.println(res == 1 ? "Message: Your account has been created successfully."
-          : "Error: Something went wrong while creating your account. Please try again.");
-      return res;
+      if (res == 1) {
+        System.out.println("Message: Your account has been created successfully.");
+
+        UserModel newUser = UserModel.getUserByEmail(email);
+
+        // Get current time
+        String combinationString = newUser.id + "==" + currentTime;
+        String accessToken = CryptoHelper.encrypt(combinationString, secretKey);
+
+        // update access_token in user table
+        UserModel.setAccessTokenById(newUser.id, accessToken);
+
+        // Gather information for the return process.
+        String jsonData = jsonParseUserData(newUser.fullname, newUser.email, accessToken, newUser.role);
+
+        return new UserData(jsonData, 201, "Success", "You have successfully logged in! Welcome!");
+      }
 
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
       System.err.println("Error: " + e.getMessage());
     }
 
-    return 0;
+    String msg = "Something went wrong while creating your account. Please try again.";
+    System.out.println("Error: " + msg);
+    return new UserData(null, 400, "Error", msg);
   }
 
-  public static String isAuthenticated(String token) throws SQLException {
+  public static UserPublicData isAuthenticated(String token) throws SQLException {
     ResultSet resultSet = UserModel.getUserByAccessToken(token);
 
-    String jsonData = null;
+    UserPublicData user = null;
     while (resultSet.next()) {
-      jsonData = jsonParseUserData(
+      user = new UserPublicData(
           resultSet.getString("fullname"),
           resultSet.getString("email"),
           resultSet.getString("access_token"),
           resultSet.getInt("role"));
     }
 
-    return jsonData;
-  }
-
-  private static boolean validateDataRegister(String email, String password) {
-    // Validate email and password format
-    if (!ValidationHelper.isValidEmail(email) || !ValidationHelper.isValidPassword(password))
-      return false;
-
-    return true;
+    return user;
   }
 
   private static String jsonParseUserData(String fullname, String email, String accessToken, int role) {

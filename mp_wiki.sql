@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2024 at 02:34 AM
+-- Generation Time: Apr 20, 2024 at 03:30 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,8 +44,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `fullname`, `email`, `password`, `salt`, `access_token`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@wikiportal.com', '5rQ+iN0poYnty7x/eyU4VQ==', 'KLRq5jSGemdb2hbxg95dWg==', 'kxs4eKOmfCLntm/+/aXNkWQ2OmsbzJ2C8URgZ/wMgRAFcJNUje+WjueP8gX+Dz/WpkfQ5TisK6PXFPVD6Nlf4AV1sKpEDkUD+1fb9r5Vb/Q7qicDnDpD1xjAp2jLonwOIMYDbCFIq0iRODKsLdhFoA==', 0, '2024-04-17 21:50:12', NULL),
-(18, 'Danny Tran', 'trandangminhnhat.dev@gmail.com', 'ni5uYFzV+isbpz1lUgz5zG5GMBzU53V54L3n+meEHhQ=', 'i96Fl6FVLqG28QtwteOFKA==', 'kxs4eKOmfCLntm/+/aXNkWQ2OmsbzJ2C8URgZ/wMgRAFcJNUje+WjueP8gX+Dz/WpkfQ5TisK6PXFPVD6Nlf4AV1sKpEDkUD+1fb9r5Vb/Q7qicDnDpD1xjAp2jLonwOIMYDbCFIq0iRODKsLdhFoA==', 1, '2024-04-17 21:51:07', NULL);
+(18, 'Danny Tran', 'trandangminhnhat.dev@gmail.com', 'ni5uYFzV+isbpz1lUgz5zG5GMBzU53V54L3n+meEHhQ=', 'i96Fl6FVLqG28QtwteOFKA==', '9EaCalRhX/WyOZSrFE1m+Wiz08qNW6SNac0XhTWpWi0=', 1, '2024-04-17 21:51:07', NULL),
+(25, 'Nhat Tran', 'test@gmail.com', 'Ur7nKzV3UxdRDnl7mk51FQ==', 'EBeUf+cEb8YZ0VgyhW2d+g==', 'OQNOlfOAFkibazgxhkzb2a7ruqjjjGMkq4I7wNtp/os=', 1, '2024-04-20 11:23:51', NULL),
+(26, 'Admin', 'admin@wikiportal.com', 'eHpYQhgVGiI2diADVlbF7A==', 'CWMh8LF0ycBqgzEtLOCqng==', 'bF1i4JIWl1oTWIWFFxONL/lafKpEXQSk9tpIoBIW3IQ=', 0, '2024-04-20 11:28:03', NULL);
 
 --
 -- Indexes for dumped tables
@@ -65,7 +66,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

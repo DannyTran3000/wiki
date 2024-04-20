@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/animation.css">
 
+<link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/dropdown/index.css">
 <link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/input-group/index.css">
 <link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/search-box/index.css">
 

@@ -19,3 +19,4 @@ passwordToggles.forEach(item => {
     }
   })
 })
+

@@ -7,9 +7,10 @@
       <h1>Wiki Portal</h1>
     </div>
     <div class="hero__slogan">
-      <b>The Free Encyclopedia</b>
+      <!-- <b>The Free Encyclopedia</b> -->
+      <b>Coming soon</b>
     </div>
-    <div class="hero__input">
+    <!-- <div class="hero__input">
       <div class="search-box">
         <div class="search-box__pre-icon">
           <svg width="37" height="39" viewBox="0 0 37 39" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +21,7 @@
         </div>
         <input id="search-box" type="text" class="search-box__input" placeholder="Hello world from Wiki Portal ...">
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="hero__banner">
     <img src="https://wiki-portal.strawflag.com/images/hero-world.png" alt="Wiki Portal Ex-logo">

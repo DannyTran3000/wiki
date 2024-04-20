@@ -1,11 +1,13 @@
 C:\Applications\code\wiki\src\main\java\com\wiki\helpers\DateTimeHelper.java
-C:\Applications\code\wiki\src\main\java\com\wiki\test\App.java
 C:\Applications\code\wiki\src\main\java\com\wiki\auth\Auth.java
+C:\Applications\code\wiki\src\main\java\com\wiki\controllers\RegisterController.java
+C:\Applications\code\wiki\src\main\java\com\wiki\config\Database.java
+C:\Applications\code\wiki\src\main\java\com\wiki\models\UserModel.java
+C:\Applications\code\wiki\src\main\java\com\wiki\helpers\CryptoHelper.java
+C:\Applications\code\wiki\src\main\java\com\wiki\helpers\CookieHelper.java
+C:\Applications\code\wiki\src\main\java\com\wiki\interfaces\UserPublicData.java
 C:\Applications\code\wiki\src\main\java\com\wiki\config\Config.java
 C:\Applications\code\wiki\src\main\java\com\wiki\helpers\ValidationHelper.java
-C:\Applications\code\wiki\src\main\java\com\wiki\config\Database.java
 C:\Applications\code\wiki\src\main\java\com\wiki\controllers\LoginController.java
 C:\Applications\code\wiki\src\main\java\com\wiki\interfaces\UserData.java
 C:\Applications\code\wiki\src\main\java\com\wiki\controllers\HomeController.java
-C:\Applications\code\wiki\src\main\java\com\wiki\models\UserModel.java
-C:\Applications\code\wiki\src\main\java\com\wiki\helpers\CryptoHelper.java

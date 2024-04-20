@@ -7,7 +7,8 @@
       <h1>Wiki Portal</h1>
     </div>
     <div class="hero__slogan">
-      <b>The Free Encyclopedia</b>
+      <!-- <b>The Free Encyclopedia</b> -->
+      <b>Coming soon</b>
     </div>
     <div class="hero__input">
       <div class="search-box">
@@ -18,7 +19,7 @@
               fill="#C4C4C4" />
           </svg>
         </div>
-        <input id="search-box" type="text" class="search-box__input" placeholder="Hello world from Wiki Portal ...">
+        <!-- <input id="search-box" type="text" class="search-box__input" placeholder="Hello world from Wiki Portal ..."> -->
       </div>
     </div>
   </div>
