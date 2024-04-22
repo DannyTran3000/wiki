@@ -25,9 +25,11 @@ vendor/
 build/
 dist/
 out/
+target/
 
 # Environment variables
 .env
+*.properties
 
 # User-specific files
 *.pem
