@@ -1,5 +1,6 @@
 com\wiki\helpers\CryptoHelper.class
 com\wiki\helpers\CookieHelper.class
+com\wiki\helpers\MailHelper.class
 com\wiki\interfaces\UserData.class
 com\wiki\interfaces\UserPublicData.class
 com\wiki\controllers\LoginController$RequestBody.class
@@ -7,9 +8,12 @@ com\wiki\controllers\RegisterController$RequestBody.class
 com\wiki\controllers\HomeController.class
 com\wiki\controllers\RegisterController.class
 com\wiki\helpers\ValidationHelper.class
+com\wiki\controllers\ForgotPasswordController$RequestBody.class
+com\wiki\helpers\MailHelper$1.class
 com\wiki\auth\Auth.class
 com\wiki\helpers\DateTimeHelper.class
 com\wiki\models\UserModel.class
 com\wiki\controllers\LoginController.class
 com\wiki\config\Config.class
 com\wiki\config\Database.class
+com\wiki\controllers\ForgotPasswordController.class

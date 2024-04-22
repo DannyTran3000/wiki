@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 .modal__dialog {
-  min-width: 40rem;
+  width: 40rem;
   padding: 2.4rem;
   background: #fff;
   border-radius: 3.2rem;

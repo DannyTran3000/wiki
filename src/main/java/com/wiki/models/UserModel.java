@@ -61,4 +61,9 @@ public class UserModel {
     String statement = "UPDATE user SET access_token = ? WHERE id = ?";
     Database.update(statement, token, id);
   }
+
+  public static void setPasswordById(int id, String password) throws SQLException {
+    String statement = "UPDATE user SET password = ? WHERE id = ?";
+    Database.update(statement, password, id);
+  }
 }

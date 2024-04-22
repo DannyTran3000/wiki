@@ -31,6 +31,6 @@ public class HomeController extends HttpServlet {
       request.setAttribute("user_role", user.role);
     }
 
-    request.getRequestDispatcher("/WEB-INF/components/templates/index.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/components/pages/index.jsp").forward(request, response);
   }
 }

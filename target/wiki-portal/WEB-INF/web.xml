@@ -15,6 +15,15 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+    <servlet>
+    <servlet-name>ForgotPasswordServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.ForgotPasswordController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForgotPasswordServlet</servlet-name>
+    <url-pattern>/forgot-password</url-pattern>
+  </servlet-mapping>
+
   <servlet>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>com.wiki.controllers.LoginController</servlet-class>

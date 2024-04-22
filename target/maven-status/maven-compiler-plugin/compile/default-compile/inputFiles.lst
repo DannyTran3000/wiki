@@ -4,9 +4,11 @@ C:\Applications\code\wiki\src\main\java\com\wiki\controllers\RegisterController.
 C:\Applications\code\wiki\src\main\java\com\wiki\config\Database.java
 C:\Applications\code\wiki\src\main\java\com\wiki\models\UserModel.java
 C:\Applications\code\wiki\src\main\java\com\wiki\helpers\CryptoHelper.java
+C:\Applications\code\wiki\src\main\java\com\wiki\controllers\ForgotPasswordController.java
 C:\Applications\code\wiki\src\main\java\com\wiki\helpers\CookieHelper.java
 C:\Applications\code\wiki\src\main\java\com\wiki\interfaces\UserPublicData.java
 C:\Applications\code\wiki\src\main\java\com\wiki\config\Config.java
+C:\Applications\code\wiki\src\main\java\com\wiki\helpers\MailHelper.java
 C:\Applications\code\wiki\src\main\java\com\wiki\helpers\ValidationHelper.java
 C:\Applications\code\wiki\src\main\java\com\wiki\controllers\LoginController.java
 C:\Applications\code\wiki\src\main\java\com\wiki\interfaces\UserData.java
