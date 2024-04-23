@@ -58,8 +58,24 @@ const changePassword = () => {
         if (submitBtn) submitBtn.setAttribute('data-loading', 'false')
 
         console.log(data)
+        switch (data?.status) {
+          case 200:
+              console.log(data?.message)
+              window.location.reload()
+            break
+
+          case 401:
+            noteInput(passwordInput, data?.message)
+            break
+
+          default:
+            console.log('Oops! Something went wrong!')
+            break
+        }
       }, 1000)
     })
+
+  return false
 }
 
 const forgotPassword = () => {
