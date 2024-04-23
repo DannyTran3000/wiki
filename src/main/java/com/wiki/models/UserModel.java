@@ -7,10 +7,10 @@ import com.wiki.config.Database;
 
 public class UserModel {
   public int id, role;
-  public String fullname, email, password, salt, access_token, created_at, updated_at;
+  public String fullname, email, password, salt, access_token, created_at;
 
   public UserModel(int id, String fullname, String email, String password, String salt, String access_token, int role,
-      String created_at, String updated_at) {
+      String created_at) {
     this.id = id;
     this.fullname = fullname;
     this.email = email;
@@ -19,7 +19,6 @@ public class UserModel {
     this.access_token = access_token;
     this.role = role;
     this.created_at = created_at;
-    this.updated_at = updated_at;
   }
 
   public static int insertUser(String fullname, String email, String password, String salt, String currentTime)
@@ -47,8 +46,7 @@ public class UserModel {
           res.getString("salt"),
           res.getString("access_token"),
           res.getInt("role"),
-          res.getString("created_at"),
-          res.getString("updated_at"));
+          res.getString("created_at"));
     }
 
     if (user != null)

@@ -1,3 +1,67 @@
+const changePassword = () => {
+  const form = document.querySelector('#change-password-form')
+
+  if (!form) {
+    console.log('Warning: Form not found.')
+    return false
+  }
+
+  const emailInput = form.querySelector('input[name="email"]')
+  const passwordInput = form.querySelector('input[name="password"]')
+  const newPasswordInput = form.querySelector('input[name="new-password"]')
+  const confirmNewPasswordInput = form.querySelector('input[name="confirm-new-password"]')
+
+  const email = emailInput?.value
+  const password = passwordInput?.value
+  const newPassword = newPasswordInput?.value
+  const confirmNewPassword = confirmNewPasswordInput?.value
+
+  if (!email) {
+    console.log('Email not found');
+    return false
+  }
+
+  if ([password, newPassword, confirmNewPassword].includes('')) {
+    if (!password) noteInput(passwordInput, 'Please ensure this field is not empty!')
+    if (!newPassword) noteInput(newPasswordInput, 'Please ensure this field is not empty!')
+    if (!confirmNewPassword) noteInput(confirmNewPasswordInput, 'Please ensure this field is not empty!')
+    return false
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    noteInput(newPasswordInput, 'The new passwords entered do not match!')
+    noteInput(confirmNewPasswordInput, 'The new passwords entered do not match!')
+    return false
+  }
+
+  if (password === newPassword && password === confirmNewPassword) {
+    noteInput(passwordInput, 'The new password is as same as your current password!')
+    noteInput(newPasswordInput, 'The new password is as same as your current password!')
+    noteInput(confirmNewPasswordInput, 'The new password is as same as your current password!')
+    return false
+  }
+
+  const data = {email, password, newPassword}
+
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+  const submitBtn = form.querySelector('button[type="submit"]')
+  if (submitBtn) submitBtn.setAttribute('data-loading', 'true')
+
+  sendRequest(
+    '/wiki-portal/change-password',
+    'POST',
+    JSON.stringify(data),
+    (data) => {
+      setTimeout(() => {
+        body.setAttribute('data-loading', 'false')
+        if (submitBtn) submitBtn.setAttribute('data-loading', 'false')
+
+        console.log(data)
+      }, 1000)
+    })
+}
+
 const forgotPassword = () => {
   const form = document.querySelector('#forgot-password-form')
 

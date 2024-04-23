@@ -12,12 +12,12 @@ import com.google.gson.JsonObject;
 import com.wiki.helpers.CryptoHelper;
 import com.wiki.helpers.DateTimeHelper;
 import com.wiki.helpers.MailHelper;
-import com.wiki.interfaces.UserData;
-import com.wiki.interfaces.UserPublicData;
+import com.wiki.interfaces.UserResponse;
+import com.wiki.interfaces.UserPublic;
 import com.wiki.models.UserModel;
 
 public class Auth {
-  public static UserData forgotPassword(String email) throws Exception {
+  public static UserResponse changePassword(String email, String password, String newPassword) throws Exception {
     UserModel user = null;
 
     try {
@@ -31,7 +31,46 @@ public class Auth {
     if (user == null) {
       String msg = "This email does not exist.";
       System.out.println("Warning: " + msg);
-      return new UserData(null, 404, "Warning", msg);
+      return new UserResponse(null, 404, "Warning", msg);
+    }
+
+    // Encodes user salt into a cryptographic key
+    SecretKey userKey = CryptoHelper.convertStringToKey(user.salt);
+
+    // Encrypt current password
+    String encryptedPassword = CryptoHelper.encrypt(password, userKey);
+    if (!user.password.equals(encryptedPassword)) {
+      String msg = "Your current password is incorrect.";
+      System.out.println("Warning: " + msg);
+      return new UserResponse(null, 401, "Warning", msg);
+    }
+
+    // Encrypted new password
+    String newEncryptedPassword = CryptoHelper.encrypt(newPassword, userKey);
+
+    // update password in user table
+    UserModel.setPasswordById(user.id, newEncryptedPassword);
+
+    String msg = "Your password has been updated.";
+    System.out.println("Message: " + msg);
+    return new UserResponse(null, 200, "Success", msg);
+  }
+
+  public static UserResponse forgotPassword(String email) throws Exception {
+    UserModel user = null;
+
+    try {
+      user = UserModel.getUserByEmail(email);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println("Error: " + e.getMessage());
+    }
+
+    // Checks if the given email already exists in the database
+    if (user == null) {
+      String msg = "This email does not exist.";
+      System.out.println("Warning: " + msg);
+      return new UserResponse(null, 404, "Warning", msg);
     }
 
     // Encodes user salt into a cryptographic key
@@ -50,10 +89,10 @@ public class Auth {
 
     String msg = "New Password has been sent to the email";
     System.out.println("Message: " + msg);
-    return new UserData(null, 200, "Success", msg);
+    return new UserResponse(null, 200, "Success", msg);
   }
 
-  public static UserData login(String email, String password) throws Exception {
+  public static UserResponse login(String email, String password) throws Exception {
     UserModel user = null;
 
     try {
@@ -67,7 +106,7 @@ public class Auth {
     if (user == null) {
       String msg = "This email does not exist.";
       System.out.println("Warning: " + msg);
-      return new UserData(null, 404, "Warning", msg);
+      return new UserResponse(null, 404, "Warning", msg);
     }
 
     // Encodes user salt into a cryptographic key
@@ -79,7 +118,7 @@ public class Auth {
     if (!encryptedPassword.equals(user.password)) {
       String msg = "The password you entered is incorrect. Please try again.";
       System.out.println("Warning: " + msg);
-      return new UserData(null, 401, "Warning", msg);
+      return new UserResponse(null, 401, "Warning", msg);
     }
 
     // Get current time
@@ -93,10 +132,10 @@ public class Auth {
     // Gather information for the return process.
     String jsonData = jsonParseUserData(user.fullname, user.email, accessToken, user.role);
 
-    return new UserData(jsonData, 200, "Success", "You have successfully logged in! Welcome back!");
+    return new UserResponse(jsonData, 200, "Success", "You have successfully logged in! Welcome back!");
   }
 
-  public static UserData register(String fullname, String email, String password) throws Exception {
+  public static UserResponse register(String fullname, String email, String password) throws Exception {
     try {
       // Check if the email is unique (not already registered) before proceeding with
       // registration
@@ -104,7 +143,7 @@ public class Auth {
       if (user != null) {
         String msg = "This email has already been registered.";
         System.out.println("Warning: " + msg);
-        return new UserData(null, 409, "Warning", msg);
+        return new UserResponse(null, 409, "Warning", msg);
       }
 
       // Generate a unique secret key for new user
@@ -133,7 +172,7 @@ public class Auth {
         // Gather information for the return process.
         String jsonData = jsonParseUserData(newUser.fullname, newUser.email, accessToken, newUser.role);
 
-        return new UserData(jsonData, 201, "Success", "You have successfully logged in! Welcome!");
+        return new UserResponse(jsonData, 201, "Success", "You have successfully logged in! Welcome!");
       }
 
     } catch (NoSuchAlgorithmException e) {
@@ -143,7 +182,7 @@ public class Auth {
 
     String msg = "Something went wrong while creating your account. Please try again.";
     System.out.println("Error: " + msg);
-    return new UserData(null, 400, "Error", msg);
+    return new UserResponse(null, 400, "Error", msg);
   }
 
   private static String generateNewPassword() {
@@ -161,12 +200,12 @@ public class Auth {
     return sb.toString();
   }
 
-  public static UserPublicData isAuthenticated(String token) throws SQLException {
+  public static UserPublic isAuthenticated(String token) throws SQLException {
     ResultSet resultSet = UserModel.getUserByAccessToken(token);
 
-    UserPublicData user = null;
+    UserPublic user = null;
     while (resultSet.next()) {
-      user = new UserPublicData(
+      user = new UserPublic(
           resultSet.getString("fullname"),
           resultSet.getString("email"),
           resultSet.getString("access_token"),

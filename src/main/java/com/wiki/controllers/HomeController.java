@@ -10,12 +10,12 @@ import java.sql.SQLException;
 
 import com.wiki.auth.Auth;
 import com.wiki.helpers.CookieHelper;
-import com.wiki.interfaces.UserPublicData;
+import com.wiki.interfaces.UserPublic;
 
 public class HomeController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String accessToken = CookieHelper.readToken(request);
-    UserPublicData user = null;
+    UserPublic user = null;
     if (!accessToken.equals("")) {
       try {
         user = Auth.isAuthenticated(accessToken);

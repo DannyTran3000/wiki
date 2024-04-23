@@ -14,7 +14,7 @@ import com.google.gson.JsonObject;
 import com.wiki.auth.Auth;
 import com.wiki.interfaces.UserResponse;
 
-public class ForgotPasswordController extends HttpServlet {
+public class ChangePasswordController extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     // Get JSON data from request body
     BufferedReader reader = request.getReader();
@@ -25,14 +25,15 @@ public class ForgotPasswordController extends HttpServlet {
     }
     reader.close();
 
-    String email = "";
+    String email = "", password = "", newPassword = "";
     try {
       // Use Jackson ObjectMapper to parse JSON data
       ObjectMapper objectMapper = new ObjectMapper();
       RequestBody body = objectMapper.readValue(requestBody.toString(), RequestBody.class);
 
-      // Access the email property from the parsed data
       email = body.getEmail();
+      password = body.getPassword();
+      newPassword = body.getNewPassword();
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Error: " + e.getMessage());
@@ -41,7 +42,7 @@ public class ForgotPasswordController extends HttpServlet {
     // login
     UserResponse meta = null;
     try {
-      meta = Auth.forgotPassword(email);
+      meta = Auth.changePassword(email, password, newPassword);
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Error: " + e.getMessage());
@@ -67,10 +68,18 @@ public class ForgotPasswordController extends HttpServlet {
   }
 
   private static class RequestBody {
-    private String email;
+    private String email, password, newPassword;
 
     public String getEmail() {
       return email;
+    }
+
+    public String getPassword() {
+      return password;
+    }
+
+    public String getNewPassword() {
+      return newPassword;
     }
   }
 }

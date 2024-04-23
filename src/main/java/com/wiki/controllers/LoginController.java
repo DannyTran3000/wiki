@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.wiki.auth.Auth;
-import com.wiki.interfaces.UserData;
+import com.wiki.interfaces.UserResponse;
 
 public class LoginController extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +40,7 @@ public class LoginController extends HttpServlet {
     }
 
     // login
-    UserData meta = null;
+    UserResponse meta = null;
     try {
       meta = Auth.login(email, password);
     } catch (Exception e) {

@@ -15,7 +15,16 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
-    <servlet>
+  <servlet>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.ChangePasswordController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/change-password</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>ForgotPasswordServlet</servlet-name>
     <servlet-class>com.wiki.controllers.ForgotPasswordController</servlet-class>
   </servlet>

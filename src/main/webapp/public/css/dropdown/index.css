@@ -37,6 +37,7 @@
   padding: 0.8rem;
 }
 .dropdown__option-content {
+  line-height: 1.8rem;
   cursor: pointer;
 }
 .dropdown__option-content:hover {
