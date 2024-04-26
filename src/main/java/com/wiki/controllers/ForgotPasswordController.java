@@ -11,10 +11,20 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.wiki.auth.Auth;
-import com.wiki.interfaces.UserResponse;
+import com.wiki.interfaces.user.UserResponse;
+import com.wiki.services.AuthService;
 
 public class ForgotPasswordController extends HttpServlet {
+  /**
+   * Handles HTTP POST requests from clients for password recovery (forgot
+   * password).
+   *
+   * @param request  The HttpServletRequest object containing the request
+   *                 parameters.
+   * @param response The HttpServletResponse object for sending the response.
+   * @throws ServletException If an error occurs during servlet processing.
+   * @throws IOException      If an I/O error occurs during request handling.
+   */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     // Get JSON data from request body
     BufferedReader reader = request.getReader();
@@ -41,7 +51,7 @@ public class ForgotPasswordController extends HttpServlet {
     // login
     UserResponse meta = null;
     try {
-      meta = Auth.forgotPassword(email);
+      meta = AuthService.forgotPassword(email);
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Error: " + e.getMessage());
@@ -66,6 +76,11 @@ public class ForgotPasswordController extends HttpServlet {
     }
   }
 
+  /**
+   * Represents the structure of the request body JSON data for forgot password
+   * requests.
+   * This class is used for deserialization using Jackson ObjectMapper.
+   */
   private static class RequestBody {
     private String email;
 

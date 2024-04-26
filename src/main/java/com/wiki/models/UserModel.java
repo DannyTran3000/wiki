@@ -2,51 +2,53 @@ package com.wiki.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import com.wiki.config.Database;
 
 public class UserModel {
-  public int id, role;
-  public String fullname, email, password, salt, access_token, created_at;
+  public String email, fullname, password, salt, accessToken;
+  public int role, status;
+  public Timestamp createdAt;
 
-  public UserModel(int id, String fullname, String email, String password, String salt, String access_token, int role,
-      String created_at) {
-    this.id = id;
-    this.fullname = fullname;
+  public UserModel(String email, String fullname, String password, String salt, String accessToken, int role,
+      int status, Timestamp createdAt) {
     this.email = email;
+    this.fullname = fullname;
     this.password = password;
     this.salt = salt;
-    this.access_token = access_token;
+    this.accessToken = accessToken;
     this.role = role;
-    this.created_at = created_at;
+    this.status = status;
+    this.createdAt = createdAt;
   }
 
-  public static int insertUser(String fullname, String email, String password, String salt, String currentTime)
+  public static int insertUser(String email, String fullname, String password, String salt)
       throws SQLException {
-    String statement = "INSERT INTO user (fullname, email, password, salt, created_at) VALUES(?,?,?,?,?)";
-    return Database.update(statement, fullname, email.toLowerCase(), password, salt, currentTime);
+    String statement = "INSERT INTO user (email, fullname, password, salt) VALUES(?,?,?,?)";
+    return Database.update(statement, email.toLowerCase(), fullname, password, salt);
   }
 
-  public static ResultSet getUserByAccessToken(String token) throws SQLException {
+  public static ResultSet selectUserByAccessToken(String token) throws SQLException {
     String statement = "SELECT * FROM user WHERE access_token = ? LIMIT 1";
     return Database.query(statement, token);
   }
 
-  public static UserModel getUserByEmail(String email) throws SQLException {
+  public static UserModel selectUserByEmail(String email) throws SQLException {
     String statement = "SELECT * FROM user WHERE email = ? LIMIT 1";
     ResultSet res = Database.query(statement, email.toLowerCase());
 
     UserModel user = null;
     while (res.next()) {
       user = new UserModel(
-          res.getInt("id"),
-          res.getString("fullname"),
           res.getString("email"),
+          res.getString("fullname"),
           res.getString("password"),
           res.getString("salt"),
           res.getString("access_token"),
           res.getInt("role"),
-          res.getString("created_at"));
+          res.getInt("status"),
+          res.getTimestamp("created_at"));
     }
 
     if (user != null)
@@ -55,13 +57,13 @@ public class UserModel {
     return null;
   }
 
-  public static void setAccessTokenById(int id, String token) throws SQLException {
-    String statement = "UPDATE user SET access_token = ? WHERE id = ?";
-    Database.update(statement, token, id);
+  public static int updateAccessTokenByEmail(String email, String token) throws SQLException {
+    String statement = "UPDATE user SET access_token = ? WHERE email = ?";
+    return Database.update(statement, token, email);
   }
 
-  public static void setPasswordById(int id, String password) throws SQLException {
-    String statement = "UPDATE user SET password = ? WHERE id = ?";
-    Database.update(statement, password, id);
+  public static int updatePasswordByEmail(String email, String password) throws SQLException {
+    String statement = "UPDATE user SET password = ? WHERE email = ?";
+    return Database.update(statement, password, email);
   }
 }

@@ -26,7 +26,7 @@
                 <input type="checkbox" name="remember" id="remember-login-checkbox">
                 <label for="remember-login-checkbox">Remember me</label>
               </div>
-              <a href="javascript:void(0);" style="cursor: pointer;"
+              <a class="login-form__link" href="javascript:void(0);" style="cursor: pointer;"
                 onclick="switchModal('login-modal', 'forgot-password-modal')">Forgot password?</a>
             </div>
           </div>

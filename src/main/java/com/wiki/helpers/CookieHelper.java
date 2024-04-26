@@ -8,6 +8,14 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class CookieHelper {
+  /**
+   * Reads the access token (authToken) from the cookies in the
+   * HttpServletRequest.
+   *
+   * @param request The HttpServletRequest object containing the cookies.
+   * @return The access token (authToken) if found in the cookies, otherwise an
+   *         empty string.
+   */
   public static String readToken(HttpServletRequest request) {
     // Get all cookies sent by the browser
     Cookie[] cookies = request.getCookies();

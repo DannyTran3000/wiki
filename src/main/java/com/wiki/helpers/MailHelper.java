@@ -9,6 +9,14 @@ import com.wiki.config.Config;
 import com.wiki.models.UserModel;
 
 public class MailHelper {
+  /**
+   * Sends an email with the specified recipient, subject, and content using the
+   * configured SMTP server settings.
+   *
+   * @param recipientEmail The email address of the recipient.
+   * @param subject        The subject of the email.
+   * @param content        The content of the email.
+   */
   private static void send(String recipientEmail, String subject, String content) {
     // Setup mail server properties
     Properties properties = new Properties();
@@ -49,12 +57,25 @@ public class MailHelper {
     }
   }
 
+  /**
+   * Sends a forgot password email to the user containing the new password.
+   *
+   * @param data     The UserModel containing user information.
+   * @param password The new password to be included in the email.
+   */
   public static void sendForgotPasswordEmail(UserModel data, String password) {
     String content = getForgotPasswordMailTemplate(data.fullname, password);
 
     send(data.email, "Password Reset Request", content);
   }
 
+  /**
+   * Generates the HTML content for the forgot password email template.
+   *
+   * @param fullname The user's full name.
+   * @param password The new password.
+   * @return The HTML content for the email template.
+   */
   private static String getForgotPasswordMailTemplate(String fullname, String password) {
     String htmlContent = "<!DOCTYPE html>\n" +
         "<html lang=\"en\">\n" +

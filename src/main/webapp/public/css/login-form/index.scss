@@ -26,6 +26,14 @@
     margin-bottom: 1.6rem;
   }
 
+  &__link {
+    color: #000;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   &__footer {
     margin-top: 2.4rem;
   }

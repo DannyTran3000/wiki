@@ -1,4 +1,4 @@
-package com.wiki.interfaces;
+package com.wiki.interfaces.user;
 
 public class UserResponse {
   public String jsonData;

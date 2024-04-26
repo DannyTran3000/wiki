@@ -7,6 +7,10 @@
 html {
   font-size: max(0.52vw, 0.92vh);
 
+  @media only screen and (max-width: 1440px) {
+    font-size: max(0.63vw, 1.11vh);
+  }
+
   body {
     font-family: Arial, sans-serif;;
     font-weight: 400;

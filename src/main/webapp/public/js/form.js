@@ -194,9 +194,6 @@ const login = () => {
 
           case 401:
             noteInput(passwordInput, data?.message)
-            break
-
-          case 404:
             noteInput(emailInput, data?.message)
             break
 

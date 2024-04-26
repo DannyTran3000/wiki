@@ -26,9 +26,6 @@
             </a>
             <div class="dropdown__content">
               <div class="dropdown__option">
-                <span class="dropdown__option-content">Profile</span>
-              </div>
-              <div class="dropdown__option">
                 <span class="dropdown__option-content" onclick="showModal('change-password-modal')">Change password</span>
               </div>
               <div class="dropdown__option">

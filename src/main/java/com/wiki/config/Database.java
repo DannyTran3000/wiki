@@ -9,6 +9,12 @@ import java.sql.SQLException;
 public class Database {
 	private static Connection con;
 
+	/**
+	 * Establishes a connection to the MySQL database using the configured URL,
+	 * username, and password.
+	 * This method is private and is called internally by other methods in the
+	 * class.
+	 */
 	private static void connect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -19,6 +25,14 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Executes a SQL query with optional parameters and returns the result set.
+	 *
+	 * @param q      The SQL query string.
+	 * @param params Optional parameters to be set in the query.
+	 * @return A ResultSet containing the query results.
+	 * @throws SQLException If an SQL error occurs during query execution.
+	 */
 	public static ResultSet query(String q, Object... params) throws SQLException {
 		ResultSet resultSet = null;
 
@@ -34,6 +48,15 @@ public class Database {
 		return resultSet;
 	}
 
+	/**
+	 * Executes an SQL update (insert, update, delete) statement with optional
+	 * parameters and returns the number of affected rows.
+	 *
+	 * @param q      The SQL update string.
+	 * @param params Optional parameters to be set in the update statement.
+	 * @return The number of rows affected by the update operation.
+	 * @throws SQLException If an SQL error occurs during update execution.
+	 */
 	public static int update(String q, Object... params) throws SQLException {
 		connect();
 

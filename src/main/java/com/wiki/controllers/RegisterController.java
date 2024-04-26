@@ -11,10 +11,19 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.wiki.auth.Auth;
-import com.wiki.interfaces.UserResponse;
+import com.wiki.interfaces.user.UserResponse;
+import com.wiki.services.AuthService;
 
 public class RegisterController extends HttpServlet {
+  /**
+   * Handles HTTP POST requests from clients for user registration.
+   *
+   * @param request  The HttpServletRequest object containing the request
+   *                 parameters.
+   * @param response The HttpServletResponse object for sending the response.
+   * @throws ServletException If an error occurs during servlet processing.
+   * @throws IOException      If an I/O error occurs during request handling.
+   */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     // Get JSON data from request body
     BufferedReader reader = request.getReader();
@@ -25,15 +34,15 @@ public class RegisterController extends HttpServlet {
     }
     reader.close();
 
-    String fullname = "", email = "", password = "";
+    String email = "", fullname = "", password = "";
     try {
       // Use Jackson ObjectMapper to parse JSON data
       ObjectMapper objectMapper = new ObjectMapper();
       RequestBody body = objectMapper.readValue(requestBody.toString(), RequestBody.class);
 
       // Access the email property from the parsed data
-      fullname = body.getFullname();
       email = body.getEmail();
+      fullname = body.getFullname();
       password = body.getPassword();
     } catch (Exception e) {
       e.printStackTrace();
@@ -43,7 +52,7 @@ public class RegisterController extends HttpServlet {
     // login
     UserResponse meta = null;
     try {
-      meta = Auth.register(fullname, email, password);
+      meta = AuthService.register(email, fullname, password);
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Error: " + e.getMessage());
@@ -68,6 +77,11 @@ public class RegisterController extends HttpServlet {
     }
   }
 
+  /**
+   * Represents the structure of the request body JSON data for user registration
+   * requests.
+   * This class is used for deserialization using Jackson ObjectMapper.
+   */
   private static class RequestBody {
     private String fullname;
     private String email;
