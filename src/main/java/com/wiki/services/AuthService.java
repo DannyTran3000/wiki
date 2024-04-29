@@ -1,7 +1,6 @@
 package com.wiki.services;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -214,18 +213,7 @@ public class AuthService {
    *                      process.
    */
   public static UserPublic isAuthenticated(String token) throws SQLException {
-    ResultSet resultSet = UserModel.selectUserByAccessToken(token);
-
-    UserPublic user = null;
-    while (resultSet.next()) {
-      user = new UserPublic(
-          resultSet.getString("email"),
-          resultSet.getString("fullname"),
-          resultSet.getString("access_token"),
-          resultSet.getInt("role"));
-    }
-
-    return user;
+    return UserModel.selectUserByAccessToken(token);
   }
 
   /**

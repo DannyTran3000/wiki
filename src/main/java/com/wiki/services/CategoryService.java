@@ -9,8 +9,9 @@ public class CategoryService {
   public static void create(String name, String iconUrl) throws SQLException {
     // Generate new slug by category name
     String slug = SlugHelper.generate(name);
+    String pathname = "/" + slug;
 
     // Insert new category
-    CategoryModel.insertCategory(name, iconUrl, slug);
+    CategoryModel.insertCategory(name, iconUrl, pathname);
   }
 }

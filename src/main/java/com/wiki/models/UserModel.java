@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import com.wiki.config.Database;
+import com.wiki.interfaces.user.UserPublic;
 
 public class UserModel {
   public String email, fullname, password, salt, accessToken;
@@ -29,26 +30,37 @@ public class UserModel {
     return Database.update(statement, email.toLowerCase(), fullname, password, salt);
   }
 
-  public static ResultSet selectUserByAccessToken(String token) throws SQLException {
-    String statement = "SELECT * FROM user WHERE access_token = ? LIMIT 1";
-    return Database.query(statement, token);
+  public static UserPublic selectUserByAccessToken(String token) throws SQLException {
+    String statement = "SELECT email, fullname, access_token, role FROM user WHERE access_token = ? LIMIT 1";
+    ResultSet resultSet = Database.query(statement, token);
+
+    UserPublic user = null;
+    while (resultSet.next()) {
+      user = new UserPublic(
+          resultSet.getString("email"),
+          resultSet.getString("fullname"),
+          resultSet.getString("access_token"),
+          resultSet.getInt("role"));
+    }
+
+    return user;
   }
 
   public static UserModel selectUserByEmail(String email) throws SQLException {
     String statement = "SELECT * FROM user WHERE email = ? LIMIT 1";
-    ResultSet res = Database.query(statement, email.toLowerCase());
+    ResultSet resultSet = Database.query(statement, email.toLowerCase());
 
     UserModel user = null;
-    while (res.next()) {
+    while (resultSet.next()) {
       user = new UserModel(
-          res.getString("email"),
-          res.getString("fullname"),
-          res.getString("password"),
-          res.getString("salt"),
-          res.getString("access_token"),
-          res.getInt("role"),
-          res.getInt("status"),
-          res.getTimestamp("created_at"));
+          resultSet.getString("email"),
+          resultSet.getString("fullname"),
+          resultSet.getString("password"),
+          resultSet.getString("salt"),
+          resultSet.getString("access_token"),
+          resultSet.getInt("role"),
+          resultSet.getInt("status"),
+          resultSet.getTimestamp("created_at"));
     }
 
     if (user != null)
