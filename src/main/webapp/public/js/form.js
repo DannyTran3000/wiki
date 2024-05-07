@@ -49,7 +49,7 @@ const changePassword = () => {
   if (submitBtn) submitBtn.setAttribute('data-loading', 'true')
 
   sendRequest(
-    '/wiki-portal/change-password',
+    '/wiki-portal/auth?action=change-password',
     'POST',
     JSON.stringify(data),
     (data) => {
@@ -108,7 +108,7 @@ const forgotPassword = () => {
   if (submitBtn) submitBtn.setAttribute('data-loading', 'true')
 
   sendRequest(
-    '/wiki-portal/forgot-password',
+    '/wiki-portal/auth?action=forgot-password',
     'POST',
     JSON.stringify(data),
     (data) => {
@@ -172,7 +172,7 @@ const login = () => {
   if (submitBtn) submitBtn.setAttribute('data-loading', 'true')
 
   sendRequest(
-    '/wiki-portal/login',
+    '/wiki-portal/auth?action=login',
     'POST',
     JSON.stringify(data),
     (data) => {
@@ -208,6 +208,7 @@ const login = () => {
 }
 
 const logout = () => {
+  sendRequest('/wiki-portal/auth?action=logout', 'POST')
   setCookie('authToken', '', -1)
   setTimeout(() => window.location.reload(), 500)
 }
@@ -258,7 +259,7 @@ const register = () => {
   if (submitBtn) submitBtn.setAttribute('data-loading', 'true')
 
   sendRequest(
-    '/wiki-portal/register',
+    '/wiki-portal/auth?action=register',
     'POST',
     JSON.stringify(data),
     (data) => {

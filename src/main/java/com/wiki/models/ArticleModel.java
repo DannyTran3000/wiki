@@ -28,4 +28,6 @@ public class ArticleModel {
     String statement = "INSERT INTO article (title, thumbnail, description, content, pathname, category_id) VALUES(?,?,?,?,?,?)";
     return Database.update(statement, title, thumbnail, description, content, pathname, categoryId);
   }
+
+  
 }

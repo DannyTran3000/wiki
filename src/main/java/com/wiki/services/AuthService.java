@@ -150,6 +150,22 @@ public class AuthService {
   }
 
   /**
+   * Logs out a user by removing their access token from the database.
+   * 
+   * @param accessToken The access token of the user to be logged out.
+   * @return A UserResponse indicating the result of the logout operation.
+   * @throws SQLException If a database error occurs during the logout process.
+   */
+  public static UserResponse logout(String accessToken) throws SQLException {
+    // Remove token
+    int res = UserModel.updateAccessTokenToNull(accessToken);
+    if (res == -1) {
+      return getUserResponse(null, 404, "Error", "Remove token failed!!!");
+    }
+    return getUserResponse(null, 200, "Success", "Remove token successfully.");
+  }
+
+  /**
    * Registers a new user in the system.
    *
    * @param email    The user's email.

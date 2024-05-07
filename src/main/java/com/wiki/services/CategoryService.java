@@ -6,12 +6,12 @@ import com.wiki.helpers.SlugHelper;
 import com.wiki.models.CategoryModel;
 
 public class CategoryService {
-  public static void create(String name, String iconUrl) throws SQLException {
+  public static void create(String name, String icon) throws SQLException {
     // Generate new slug by category name
     String slug = SlugHelper.generate(name);
     String pathname = "/" + slug;
 
     // Insert new category
-    CategoryModel.insertCategory(name, iconUrl, pathname);
+    CategoryModel.insertCategory(name, icon, pathname);
   }
 }

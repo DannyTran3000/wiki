@@ -69,4 +69,30 @@ public class Database {
 
 		return response;
 	}
+
+	/**
+	 * Prepares a structured SQL query with placeholders and parameters to match the
+	 * specified format.
+	 *
+	 * @param q      The SQL query string with placeholders represented by '?'.
+	 * @param params Parameters to be inserted into the query's placeholders.
+	 * @return The prepared SQL query string with actual parameter values.
+	 */
+	public static String prepareStructureSQL(String q, String... params) {
+		String[] qArr = q.split("\\?");
+
+		if (qArr.length - 1 != params.length) {
+			final String msg = "Error: Your input does not match with requirement statement!!!";
+			System.out.println(msg);
+			return msg;
+		}
+
+		String stmt = qArr[0];
+		for (int i = 0; i < params.length; i++) {
+			stmt += params[i];
+			stmt += qArr[i + 1];
+		}
+
+		return stmt;
+	}
 }

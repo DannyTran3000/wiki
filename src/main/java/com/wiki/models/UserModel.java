@@ -74,6 +74,11 @@ public class UserModel {
     return Database.update(statement, token, email);
   }
 
+  public static int updateAccessTokenToNull(String token) throws SQLException {
+    String statement = "UPDATE user SET access_token = ? WHERE access_token = ?";
+    return Database.update(statement, null, token);
+  }
+
   public static int updatePasswordByEmail(String email, String password) throws SQLException {
     String statement = "UPDATE user SET password = ? WHERE email = ?";
     return Database.update(statement, password, email);
