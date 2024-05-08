@@ -6,8 +6,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.wiki.interfaces.article.ArticlePublic;
 import com.wiki.middlewares.AuthMiddleware;
+import com.wiki.services.ArticleService;
 
 public class HomeController extends HttpServlet {
   /**
@@ -22,6 +27,17 @@ public class HomeController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     // Authorization
     AuthMiddleware.authorize(request, response, null);
+
+    // Get latest articles
+    List<ArticlePublic> articles = new ArrayList<>();
+    try {
+      articles = ArticleService.readLatest();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    request.setAttribute("latestArticles", articles);
 
     request.getRequestDispatcher("/WEB-INF/components/pages/index.jsp").forward(request, response);
   }

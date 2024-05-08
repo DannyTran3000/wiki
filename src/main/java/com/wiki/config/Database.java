@@ -79,7 +79,8 @@ public class Database {
 	 * @return The prepared SQL query string with actual parameter values.
 	 */
 	public static String prepareStructureSQL(String q, String... params) {
-		String[] qArr = q.split("\\?");
+		String spacingStr = " " + q + " ";
+		String[] qArr = spacingStr.split("\\?");
 
 		if (qArr.length - 1 != params.length) {
 			final String msg = "Error: Your input does not match with requirement statement!!!";

@@ -10,4 +10,20 @@ public class UserPublic {
     this.accessToken = accessToken;
     this.role = role;
   }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getFullname() {
+    return fullname;
+  }
+
+  public String getAccessToken() {
+    return accessToken;
+  }
+
+  public int getRole() {
+    return role;
+  }
 }

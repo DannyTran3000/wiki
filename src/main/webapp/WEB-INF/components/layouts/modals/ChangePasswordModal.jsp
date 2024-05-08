@@ -1,4 +1,4 @@
-<c:if test="${not empty user_email}">
+<c:if test="${not empty user.email}">
   <div id="change-password-modal" class="modal" data-toggle="false" onclick="hideModal('change-password-modal')">
     <div class="modal__dialog" onclick="event.stopPropagation()">
       <form id="change-password-form" onsubmit="return changePassword()">
@@ -10,7 +10,7 @@
             <span class="login-form__description">Change password to make your account more secure.</span>
           </div>
           <div class="login-form__content">
-            <input type="hidden" name="email" value="${user_email}">
+            <input type="hidden" name="email" value="${user.email}">
             <div class="input-group input-group--action login-form__input-group">
               <label>Current Password <b style="color: red">*</b></label>
               <input type="password" name="password">

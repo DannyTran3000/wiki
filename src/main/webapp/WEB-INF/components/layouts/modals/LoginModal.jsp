@@ -1,4 +1,4 @@
-<c:if test="${empty user_email}">
+<c:if test="${empty user.email}">
   <div id="login-modal" class="modal" data-toggle="false" onclick="hideModal('login-modal')">
     <div class="modal__dialog" onclick="event.stopPropagation()">
       <form id="login-form" onsubmit="return login()">

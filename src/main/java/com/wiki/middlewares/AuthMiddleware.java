@@ -68,10 +68,7 @@ public class AuthMiddleware {
 
     // Set user attributes if the user is authenticated
     if (user != null) {
-      request.setAttribute("user_fullname", user.fullname);
-      request.setAttribute("user_email", user.email);
-      request.setAttribute("user_access_token", user.accessToken);
-      request.setAttribute("user_role", user.role);
+      request.setAttribute("user", user);
     }
   }
 }

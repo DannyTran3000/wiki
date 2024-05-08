@@ -1,4 +1,4 @@
-<c:if test="${empty user_email}">
+<c:if test="${empty user.email}">
   <div id="forgot-password-modal" class="modal" data-toggle="false" onclick="hideModal('forgot-password-modal')">
     <div class="modal__dialog" onclick="event.stopPropagation()">
       <form id="forgot-password-form" onsubmit="return forgotPassword()">

@@ -31,7 +31,7 @@ public class UserModel {
   }
 
   public static UserPublic selectUserByAccessToken(String token) throws SQLException {
-    String statement = "SELECT email, fullname, access_token, role FROM user WHERE access_token = ? LIMIT 1";
+    String statement = "SELECT email, fullname, access_token, role FROM user WHERE access_token = ? AND status = 1 LIMIT 1";
     ResultSet resultSet = Database.query(statement, token);
 
     UserPublic user = null;
@@ -47,7 +47,7 @@ public class UserModel {
   }
 
   public static UserModel selectUserByEmail(String email) throws SQLException {
-    String statement = "SELECT * FROM user WHERE email = ? LIMIT 1";
+    String statement = "SELECT * FROM user WHERE email = ? AND status = 1 LIMIT 1";
     ResultSet resultSet = Database.query(statement, email.toLowerCase());
 
     UserModel user = null;
