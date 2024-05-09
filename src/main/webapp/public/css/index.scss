@@ -52,5 +52,13 @@ html {
         list-style: none;
       }
     }
+
+    .section {
+      &__heading {
+        font-size: 3.6rem;
+        font-weight: 600;
+        line-height: 5.4rem;
+      }
+    }
   }
 }

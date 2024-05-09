@@ -1,0 +1,51 @@
+.footer {
+  padding: 12rem 0 8rem 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__logo {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 2.4rem;
+  }
+
+  &__nav-list {
+    display: flex;
+    align-items: center;
+
+    &[data-align="end"] {
+      justify-content: flex-end;
+    }
+  }
+
+  &__nav-item {
+    padding: 0 0.8rem;
+
+    border-left: 0.1rem solid #000;
+
+    line-height: 1.2rem;
+
+
+    &:first-child {
+      border: none;
+    }
+
+    &.footer__nav-item--active {
+      font-weight: 600;
+    }
+  }
+
+  &__nav-link {
+    border-bottom: 0.1rem solid transparent;
+
+    color: #000;
+
+    transition: border 0.25s ease-in-out;
+
+    &:hover {
+      border-bottom-color: #000;
+    }
+  }
+}

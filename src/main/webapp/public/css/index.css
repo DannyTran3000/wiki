@@ -44,4 +44,9 @@ html body input {
 }
 html body ul li {
   list-style: none;
+}
+html body .section__heading {
+  font-size: 3.6rem;
+  font-weight: 600;
+  line-height: 5.4rem;
 }/*# sourceMappingURL=index.css.map */

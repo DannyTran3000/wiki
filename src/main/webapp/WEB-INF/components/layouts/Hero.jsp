@@ -23,11 +23,11 @@
       </div>
     </div> -->
   </div>
-  <c:if test="${not empty latestArticles}">
+  <!-- <c:if test="${not empty latestArticles}">
     <c:forEach var="article" items="${latestArticles}">
       <div>${article.title}</div>
     </c:forEach>
-  </c:if>
+  </c:if> -->
   <div class="hero__banner">
     <img src="https://wiki-portal.strawflag.com/images/hero-world.png" alt="Wiki Portal Ex-logo">
   </div>
