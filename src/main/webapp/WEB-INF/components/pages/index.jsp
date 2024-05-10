@@ -15,13 +15,16 @@
 <body>
   <div id="home" class="wrapper">
     <%@ include file="../layouts/Header.jsp" %>
-      <main>
-        <%@ include file="../layouts/Hero.jsp" %>
-      </main>
-      <%@ include file="../layouts/modals/ChangePasswordModal.jsp" %>
-      <%@ include file="../layouts/modals/ForgotPasswordModal.jsp" %>
-      <%@ include file="../layouts/modals/RegisterModal.jsp" %>
-      <%@ include file="../layouts/modals/LoginModal.jsp" %>
+    <main>
+      <%@ include file="../layouts/Hero.jsp" %>
+      <%@ include file="../layouts/LatestArticles.jsp" %>
+    </main>
+    <%@ include file="../layouts/Footer.jsp" %>
+
+    <%@ include file="../layouts/modals/ChangePasswordModal.jsp" %>
+    <%@ include file="../layouts/modals/ForgotPasswordModal.jsp" %>
+    <%@ include file="../layouts/modals/RegisterModal.jsp" %>
+    <%@ include file="../layouts/modals/LoginModal.jsp" %>
   </div>
 
   <%@ include file="../meta/Scripts.jsp" %>

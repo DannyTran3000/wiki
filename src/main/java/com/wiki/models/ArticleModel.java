@@ -35,15 +35,16 @@ public class ArticleModel {
 
   public static List<ArticlePublic> selectLatestArticles(int limit) throws SQLException {
     final String select = Database.prepareStructureSQL(
-        "SELECT ?,?,?,?,?,?,?,?",
+        "SELECT ?,?,?,?,?,?,?,?,?",
         "A.title",
         "A.thumbnail",
         "A.description",
         "A.content",
+        "A.views",
         "A.pathname",
         "C.name AS category_name",
         "C.pathname AS category_pathname",
-        "A.created_at");
+        "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
     final String from = "FROM article AS A";
     final String join = "JOIN category AS C ON A.category_id = C.id";
     final String where = "WHERE A.status = 1";
@@ -59,10 +60,11 @@ public class ArticleModel {
           resultSet.getString("thumbnail"),
           resultSet.getString("description"),
           resultSet.getString("content"),
+          resultSet.getInt("views"),
           resultSet.getString("pathname"),
           resultSet.getString("category_name"),
           resultSet.getString("category_pathname"),
-          resultSet.getTimestamp("created_at"));
+          resultSet.getString("created_at"));
 
       articleList.add(article);
     }

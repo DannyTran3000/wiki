@@ -57,14 +57,15 @@ public class Schema {
    * @throws SQLException If an SQL error occurs during table creation.
    */
   private static void createArticleTable() throws SQLException {
-    String statement = "CREATE TABLE IF NOT EXISTS article (?,?,?,?,?,?,?,?,?)";
+    String statement = "CREATE TABLE IF NOT EXISTS article (?,?,?,?,?,?,?,?,?,?)";
     String prepareStatement = Database.prepareStructureSQL(
         statement,
         "id INT PRIMARY KEY AUTO_INCREMENT",
         "title VARCHAR(255) NOT NULL",
         "thumbnail VARCHAR(255) NOT NULL",
-        "description VARCHAR(255) NOT NULL",
+        "description TEXT NOT NULL",
         "content TEXT NOT NULL",
+        "views INT DEFAULT 0",
         "pathname VARCHAR(255) NOT NULL UNIQUE",
         "category_id INT NOT NULL",
         "status TINYINT DEFAULT 1 COMMENT '0: Inactive; 1: Active'",

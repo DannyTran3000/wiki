@@ -3,15 +3,16 @@ package com.wiki.interfaces.article;
 import java.sql.Timestamp;
 
 public class ArticlePublic {
-  public String title, thumbnail, description, content, pathname, categoryName, categoryPathname;
-  public Timestamp createdAt;
+  public String title, thumbnail, description, content, pathname, categoryName, categoryPathname, createdAt;
+  public int views;
 
-  public ArticlePublic(String title, String thumbnail, String description, String content, String pathname,
-      String categoryName, String categoryPathname, Timestamp timestamp) {
+  public ArticlePublic(String title, String thumbnail, String description, String content, int views, String pathname,
+      String categoryName, String categoryPathname, String timestamp) {
     this.title = title;
     this.thumbnail = thumbnail;
     this.description = description;
     this.content = content;
+    this.views = views;
     this.pathname = pathname;
     this.categoryName = categoryName;
     this.categoryPathname = categoryPathname;
@@ -34,6 +35,10 @@ public class ArticlePublic {
     return content;
   }
 
+  public int getViews() {
+    return views;
+  }
+
   public String getPathname() {
     return pathname;
   }
@@ -46,7 +51,7 @@ public class ArticlePublic {
     return categoryPathname;
   }
 
-  public Timestamp getCreatedAt() {
+  public String getCreatedAt() {
     return createdAt;
   }
 }
