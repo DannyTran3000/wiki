@@ -48,6 +48,9 @@ public class ArticleService {
   }
 
   public static ArticlePublic readSingle(String pathname) throws SQLException {
+    // Increase views
+    ArticleModel.updateArticleViews(pathname);
+    // Get article
     return ArticleModel.selectArticleByPathname(pathname);
   }
 }

@@ -14,4 +14,6 @@
 <link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/footer/index.css">
 <link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/modal/index.css">
 
+<link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/single/index.css">
+
 <link rel="stylesheet" href="https://wiki-portal.strawflag.com/css/index.css">

@@ -47,7 +47,7 @@ public class ArticleModel {
     final String from = "FROM article AS A";
     final String join = "JOIN category AS C ON A.category_id = C.id";
     final String where = "WHERE A.pathname = ? AND A.status = 1";
-    
+
     String statement = select + " " + from + " " + join + " " + where;
     ResultSet resultSet = Database.query(statement, pathname);
 
@@ -83,7 +83,7 @@ public class ArticleModel {
     final String join = "JOIN category AS C ON A.category_id = C.id";
     final String where = "WHERE A.status = 1";
     final String rest = "ORDER BY A.created_at DESC LIMIT ?";
-    
+
     String statement = select + " " + from + " " + join + " " + where + " " + rest;
     ResultSet resultSet = Database.query(statement, limit);
 
@@ -104,5 +104,10 @@ public class ArticleModel {
     }
 
     return articleList;
+  }
+
+  public static void updateArticleViews(String pathname) throws SQLException {
+    String statement = "UPDATE article SET views = views + 1 WHERE pathname = ?";
+    Database.update(statement, pathname);
   }
 }
