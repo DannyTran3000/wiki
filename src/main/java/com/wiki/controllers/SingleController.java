@@ -40,6 +40,5 @@ public class SingleController extends HttpServlet {
     request.setAttribute("single", article);
 
     request.getRequestDispatcher("/WEB-INF/components/pages/Single.jsp").forward(request, response);
-
   }
 }

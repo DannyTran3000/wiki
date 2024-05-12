@@ -2,8 +2,8 @@
   <nav class="header__nav">
     <ul class="header__nav-list" data-align="start">
       <li class="header__nav-item header__nav-item--active"><a href="/wiki-portal" class="header__nav-link">Home</a></li>
-      <!-- <li class="header__nav-item"><a href="/categories" class="header__nav-link">Categories</a></li>
-      <li class="header__nav-item"><a href="/articles" class="header__nav-link">Articles</a></li> -->
+      <li class="header__nav-item"><a href="/categories" class="header__nav-link">Categories</a></li>
+      <li class="header__nav-item"><a href="/articles" class="header__nav-link">Articles</a></li>
     </ul>
     <ul class="header__nav-list" data-align="end">
       <c:if test="${empty user.fullname}">
