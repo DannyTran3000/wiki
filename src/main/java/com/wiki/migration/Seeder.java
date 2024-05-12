@@ -48,7 +48,7 @@ public class Seeder {
    * @throws SQLException If an SQL error occurs during article creation.
    */
   private static void runArticleSeeder() throws SQLException {
-    final int newArticleNumber = 50; // max is 90
+    final int newArticleNumber = 50; // max should be 90 for once !!! out of memory
 
     Random random = new Random();
 

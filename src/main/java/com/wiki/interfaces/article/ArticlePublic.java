@@ -1,7 +1,5 @@
 package com.wiki.interfaces.article;
 
-import java.sql.Timestamp;
-
 public class ArticlePublic {
   public String title, thumbnail, description, content, pathname, categoryName, categoryPathname, createdAt;
   public int views;

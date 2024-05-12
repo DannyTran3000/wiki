@@ -46,4 +46,8 @@ public class ArticleService {
     final int limit = 3;
     return ArticleModel.selectLatestArticles(limit);
   }
+
+  public static ArticlePublic readSingle(String pathname) throws SQLException {
+    return ArticleModel.selectArticleByPathname(pathname);
+  }
 }

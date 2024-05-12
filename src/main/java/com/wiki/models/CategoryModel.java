@@ -26,7 +26,7 @@ public class CategoryModel {
   }
 
   public static String selectCategoryPathnameById(int id) throws SQLException {
-    String statement = "SELECT pathname FROM category WHERE id = ? AND status = 1 LIMIT 1";
+    String statement = "SELECT pathname FROM category WHERE id = ? AND status = 1";
     ResultSet resultSet = Database.query(statement, id);
 
     String pathname = "";

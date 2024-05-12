@@ -16,6 +16,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>SingleServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.SingleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SingleServlet</servlet-name>
+    <url-pattern>/articles/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>com.wiki.controllers.AuthController</servlet-class>
   </servlet>
