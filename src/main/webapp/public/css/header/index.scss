@@ -6,6 +6,9 @@
   width: 100%;
   padding: 1.6rem 6.4rem;
 
+  background: rgba($color: #fff, $alpha: 0.3);
+  backdrop-filter: blur(1rem);
+
   font-size: 1.6rem;
 
   &__nav {
