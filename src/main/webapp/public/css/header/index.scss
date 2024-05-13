@@ -12,6 +12,8 @@
   font-size: 1.6rem;
 
   &__nav {
+    position: relative;
+
     height: 6rem;
 
     display: flex;
@@ -23,6 +25,15 @@
     display: flex;
     align-items: center;
 
+    &[data-align="center"] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+
+      transform: translate(-50%, -50%);
+    }
+
     &[data-align="end"] {
       justify-content: flex-end;
     }
@@ -31,12 +42,19 @@
   &__nav-item {
     padding: 0 0.8rem;
 
-    border-left: 0.1rem solid #000;
+    border-right: 0.1rem solid #000;
 
     line-height: 1.2rem;
 
-
     &:first-child {
+      border: none;
+
+      .header__nav-link:hover {
+        border-bottom-color: transparent!important;
+      }
+    }
+
+    &:last-child {
       border: none;
     }
 
@@ -55,5 +73,10 @@
     &:hover {
       border-bottom-color: #000;
     }
+  }
+
+  &__logo {
+    width: 4.8rem;
+    height: 4.8rem;
   }
 }
