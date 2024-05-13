@@ -47,6 +47,18 @@ public class ArticleService {
     return ArticleModel.selectLatestArticles(limit);
   }
 
+  /**
+   * Reads a single article from the database based on the provided pathname.
+   *
+   * This method performs the following actions:
+   * - Increases the view count of the article identified by the given pathname.
+   * - Retrieves and returns the article from the database.
+   *
+   * @param pathname the pathname of the article to be read
+   * @return the ArticlePublic object representing the article
+   * @throws SQLException if a database access error occurs or the pathname is
+   *                      invalid
+   */
   public static ArticlePublic readSingle(String pathname) throws SQLException {
     // Increase views
     ArticleModel.updateArticleViews(pathname);

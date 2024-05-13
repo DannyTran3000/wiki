@@ -29,6 +29,25 @@ public class SlugHelper {
     return slug;
   }
 
+  /**
+   * Extracts the article pathname from a given URL string.
+   *
+   * This method performs the following actions:
+   * - Creates a URL object from the input string.
+   * - Retrieves the path component of the URL.
+   * - Splits the path into parts based on the '/' delimiter.
+   * - Extracts and returns the category and slug parts if they exist in the
+   * expected structure.
+   * - If the URL does not conform to the expected structure, returns an empty
+   * string and logs an appropriate message.
+   *
+   * @param urlString the input URL string from which to extract the article
+   *                  pathname
+   * @return a string containing the extracted article pathname in the format
+   *         "/{category}/{slug}",
+   *         or an empty string if the URL is invalid or does not contain the
+   *         expected structure
+   */
   public static String extractArticlePathname(String urlString) {
     try {
       // Create a URL object
