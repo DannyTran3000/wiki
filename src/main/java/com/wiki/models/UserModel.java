@@ -83,4 +83,9 @@ public class UserModel {
     String statement = "UPDATE user SET password = ? WHERE email = ?";
     return Database.update(statement, password, email);
   }
+
+  public static int updateRoleByEmail(String email, int role) throws SQLException {
+    String statement = "UPDATE user SET role = ? WHERE email = ?";
+    return Database.update(statement, role, email);
+  }
 }

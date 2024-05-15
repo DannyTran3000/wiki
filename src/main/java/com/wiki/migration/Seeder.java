@@ -21,7 +21,9 @@ public class Seeder {
    * @throws Exception If an error occurs during user creation.
    */
   private static void runUserSeeder() throws Exception {
-    AuthService.register("s1529456@student.mp.edu.au", "Admin", "Wiki3000.");
+    final String email = "s1529456@student.mp.edu.au";
+    AuthService.register(email, "Admin", "Wiki3000.");
+    AuthService.updateIntoAdminRole(email);
   }
 
   /**
@@ -48,7 +50,7 @@ public class Seeder {
    * @throws SQLException If an SQL error occurs during article creation.
    */
   private static void runArticleSeeder() throws SQLException {
-    final int newArticleNumber = 50; // max should be 90 for once !!! out of memory
+    final int newArticleNumber = 60; // max should be 90 for once !!! out of memory
 
     Random random = new Random();
 

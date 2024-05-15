@@ -232,6 +232,10 @@ public class AuthService {
     return UserModel.selectUserByAccessToken(token);
   }
 
+  public static int updateIntoAdminRole(String email) throws SQLException {
+    return UserModel.updateRoleByEmail(email, 0);
+  }
+
   /**
    * Generates a new random password consisting of uppercase letters, lowercase
    * letters, and digits.

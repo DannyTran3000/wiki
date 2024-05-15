@@ -3,7 +3,9 @@
     <img src="${article.thumbnail}" alt="${article.title}">
   </div>
   <div class="article-card__info">
-    <h5 class="article-card__title">${article.title}</h5>
+    <a href="/wiki-portal/articles${article.pathname}">
+      <h5 class="article-card__title">${article.title}</h5>
+    </a>
     <div class="article-card__figure">
       <div class="article-card__figure-view">
         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">

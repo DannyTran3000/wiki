@@ -1,0 +1,12 @@
+.category {
+  padding: 0 18rem;
+}
+.category__list {
+  padding-top: 3.2rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.category__list-item {
+  width: 33.3333333333%;
+  margin-bottom: 4.8rem;
+}/*# sourceMappingURL=index.css.map */
