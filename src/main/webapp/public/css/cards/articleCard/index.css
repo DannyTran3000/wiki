@@ -4,26 +4,27 @@
 .article-card__thumbnail {
   position: relative;
   width: 40rem;
-  height: 40rem;
+  padding-top: 40rem;
+  overflow: hidden;
 }
 .article-card__thumbnail::before {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
-  width: 34.9rem;
-  height: 40rem;
+  width: 87.5%;
+  height: 100%;
   background: #e7e7e7;
   border-radius: 1.6rem;
   content: "";
 }
 .article-card__thumbnail > img {
   position: absolute;
-  top: 3.2rem;
-  left: 3.2rem;
+  top: 8%;
+  left: 5%;
   z-index: 2;
-  width: 37.2rem;
-  height: 32.9rem;
+  width: 93%;
+  height: 82.25%;
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: center;
@@ -35,10 +36,10 @@
   flex: 1;
 }
 .article-card__title {
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   color: #000;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 2.6rem;
 }
 .article-card__figure {
@@ -60,16 +61,24 @@
   height: 1.6rem;
   margin-right: 1.2rem;
 }
+.article-card__figure-date {
+  font-size: 1.2rem;
+  line-height: 4.8rem;
+}
 .article-card__description {
-  min-height: 17rem;
+  min-height: 12rem;
   margin-bottom: 3.2rem;
   display: -webkit-box;
   overflow: hidden;
-  font-size: 1.6rem;
-  line-height: 2;
+  font-size: 1.4rem;
+  line-height: 2rem;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
+}
+.article-card__action {
+  display: flex;
+  justify-content: flex-end;
 }
 .article-card__link {
   padding: 0.8rem 2.4rem;

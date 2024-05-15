@@ -3,9 +3,8 @@
     <img src="https://wiki-portal.strawflag.com/images/logo.png" alt="Wiki Portal Logo">
   </div>
   <ul class="footer__nav-list">
-    <li class="footer__nav-item"><a href="#" class="footer__nav-link">Make a donation</a></li>
     <li class="footer__nav-item"><a href="#" class="footer__nav-link">About</a></li>
     <li class="footer__nav-item"><a href="#" class="footer__nav-link">Privacy Policy</a></li>
     <li class="footer__nav-item"><a href="#" class="footer__nav-link">Contact Us</a></li>
-    </nav>
+  </ul>
 </footer>

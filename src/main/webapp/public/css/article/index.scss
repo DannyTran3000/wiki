@@ -1,12 +1,13 @@
 .article {
-  padding: 0 18rem;
-
+  max-width: 114rem;
+  margin: auto;
+  
   &__list {
     padding-top: 3.2rem;
   }
 
   &__list-item {
+    max-width: 93rem;
     margin-bottom: 4.8rem;
-    padding-right: 15rem;
   }
 }

@@ -1,0 +1,31 @@
+.category-card {
+  display: flex;
+
+  border: 0.2rem solid #f2f2f2;
+
+  &__left {
+    width: 55%;
+    padding: 2rem 0 0.4rem 3.2rem;
+
+    display: flex;
+    flex-direction: column;
+
+
+    border-right: 0.2rem solid #f2f2f2;
+  }
+
+  &__icon {
+    position: relative;
+
+    width: 5rem;
+    height: 5rem;
+    padding: 1.2rem;
+
+    background: #f2f2f2;
+    border-radius: 50%;
+  }
+
+  &__right {
+    flex: 1;
+  }
+}
