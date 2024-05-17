@@ -24,6 +24,7 @@
           <div class="select__option" data-value="date">Date</div>
           <div class="select__option" data-value="title">Name</div>
           <div class="select__option" data-value="views">Views</div>
+          <div class="select__option" data-value="views">Views</div>
         </div>
       </div>
     </div>
