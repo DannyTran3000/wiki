@@ -1,30 +1,27 @@
 package com.wiki.controllers;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.ServletException;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wiki.interfaces.article.ArticlePublic;
 import com.wiki.interfaces.category.CategoryPublic;
 import com.wiki.middlewares.AuthMiddleware;
-import com.wiki.services.ArticleService;
 import com.wiki.services.CategoryService;
 
-public class HomeController extends HttpServlet {
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class CategoriesController extends HttpServlet {
   /**
-   * Handles HTTP GET requests for displaying content on the index page.
+   * Handles HTTP GET requests for displaying categories on the Categories page.
    *
-   * This method performs authorization, retrieves the latest articles and
-   * categories,
-   * sets them as attributes in the request, and forwards the request to the
-   * index.jsp page
-   * for rendering.
+   * This method performs authorization, retrieves all categories, sets them as an
+   * attribute
+   * in the request, and forwards the request to the Categories.jsp page for
+   * rendering.
    *
    * @param request  The HttpServletRequest object representing the client's
    *                 request.
@@ -37,20 +34,17 @@ public class HomeController extends HttpServlet {
     // Authorization
     AuthMiddleware.authorize(request, response, null);
 
-    // Get latest articles & categories
-    List<ArticlePublic> articles = new ArrayList<>();
+    // Get all categories
     List<CategoryPublic> categories = new ArrayList<>();
     try {
-      articles = ArticleService.readLatest();
       categories = CategoryService.read();
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    request.setAttribute("latestArticles", articles);
     request.setAttribute("categories", categories);
 
-    request.getRequestDispatcher("/WEB-INF/components/pages/index.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/components/pages/Categories.jsp").forward(request, response);
   }
 }

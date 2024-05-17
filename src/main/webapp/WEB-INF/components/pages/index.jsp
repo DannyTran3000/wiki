@@ -15,11 +15,12 @@
 </head>
 
 <body>
-  <div id="home" class="wrapper">
+  <div id="${page_name}" class="wrapper">
     <%@ include file="../layouts/Header.jsp" %>
     <main>
-      <%@ include file="../layouts/Hero.jsp" %>
-      <%@ include file="../layouts/LatestArticles.jsp" %>
+      <%@ include file="../layouts/sections/Hero.jsp" %>
+      <%@ include file="../layouts/sections/LatestArticles.jsp" %>
+      <%@ include file="../layouts/sections/Categories.jsp" %>
     </main>
     <%@ include file="../layouts/Footer.jsp" %>
 

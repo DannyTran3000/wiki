@@ -30,7 +30,7 @@ public class SlugHelper {
   }
 
   /**
-   * Extracts the article pathname from a given URL string.
+   * Extracts the article slug from a given URL string.
    *
    * This method performs the following actions:
    * - Creates a URL object from the input string.
@@ -42,13 +42,13 @@ public class SlugHelper {
    * string and logs an appropriate message.
    *
    * @param urlString the input URL string from which to extract the article
-   *                  pathname
-   * @return a string containing the extracted article pathname in the format
+   *                  slug
+   * @return a string containing the extracted article slug in the format
    *         "/{category}/{slug}",
    *         or an empty string if the URL is invalid or does not contain the
    *         expected structure
    */
-  public static String extractArticlePathname(String urlString) {
+  public static String extractArticleSlug(String urlString) {
     try {
       // Create a URL object
       @SuppressWarnings("deprecation")
@@ -59,10 +59,9 @@ public class SlugHelper {
 
       // Extract the slug from the path
       String[] pathParts = path.split("/");
-      if (pathParts.length >= 5) { // Assuming "/wiki-portal/articles/{category}/{slug}" structure
-        String category = pathParts[3];
-        String slug = pathParts[4];
-        return "/" + category + "/" + slug;
+      if (pathParts.length >= 4) { // Assuming "/wiki-portal/articles/{category}/{slug}" structure
+        String slug = pathParts[3];
+        return slug;
       } else {
         System.out.println("Category or Slug not found in URL.");
         return "";

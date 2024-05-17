@@ -15,23 +15,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class SingleController extends HttpServlet {
   /**
-   * Handles GET requests for fetching and displaying a single article.
+   * Handles HTTP GET requests for displaying a single article on the Single page.
    *
-   * This method performs the following actions:
-   * - Authorizes the request using the AuthMiddleware.
-   * - Extracts the article pathname from the request URL.
-   * - Attempts to read the article from the database using the ArticleService.
-   * - If the article does not exist, redirects to a 404 error page.
-   * - If the article exists, forwards the request to the Single.jsp page for
-   * display.
+   * This method performs authorization, extracts the article slug from the
+   * request URL,
+   * retrieves the corresponding article from the database, and forwards the
+   * request to either
+   * the Single.jsp page for rendering the article or the Error.jsp page with a
+   * 404 status if
+   * the article is not found.
    *
-   * @param request  the HttpServletRequest object that contains the request the
-   *                 client made to the servlet
-   * @param response the HttpServletResponse object that contains the response the
-   *                 servlet returns to the client
-   * @throws ServletException if the request for the GET could not be handled
-   * @throws IOException      if an input or output error is detected when the
-   *                          servlet handles the GET request
+   * @param request  The HttpServletRequest object representing the client's
+   *                 request.
+   * @param response The HttpServletResponse object for sending the response back
+   *                 to the client.
+   * @throws ServletException If an error occurs during servlet processing.
+   * @throws IOException      If an I/O error occurs during request handling.
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     // Authorization
@@ -39,19 +38,19 @@ public class SingleController extends HttpServlet {
 
     // Get request url
     String url = request.getRequestURL().toString();
-    // Extract article pathname
-    String articlePathname = SlugHelper.extractArticlePathname(url);
+    // Extract article slug
+    String articleSlug = SlugHelper.extractArticleSlug(url);
 
-    ArticlePublic article = null;
+    ArticlePublic single = null;
     try {
-      article = ArticleService.readSingle(articlePathname);
+      single = ArticleService.readSingle(articleSlug);
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
     // Redirect to an not found page if the article does nWot exist
-    if (article == null) {
+    if (single == null) {
       // Set attributes for the error page to display appropriate message
       request.setAttribute("page_code", 404);
       request.setAttribute("page_message", "Page not found!!!");
@@ -60,7 +59,7 @@ public class SingleController extends HttpServlet {
       request.getRequestDispatcher("/WEB-INF/components/pages/Error.jsp").forward(request, response);
     }
 
-    request.setAttribute("single", article);
+    request.setAttribute("single", single);
 
     request.getRequestDispatcher("/WEB-INF/components/pages/Single.jsp").forward(request, response);
   }

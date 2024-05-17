@@ -11,45 +11,45 @@ import com.wiki.interfaces.article.ArticlePublic;
 
 public class ArticleModel {
   public int id, status, categoryId;
-  public String title, thumbnail, description, content, pathname;
+  public String title, thumbnail, description, content, slug;
   public Timestamp createdAt;
 
-  public ArticleModel(int id, String title, String thumbnail, String description, String content, String pathname,
+  public ArticleModel(int id, String title, String thumbnail, String description, String content, String slug,
       int status, int categoryId, Timestamp createdAt) {
     this.id = id;
     this.title = title;
     this.thumbnail = thumbnail;
     this.description = description;
     this.content = content;
-    this.pathname = pathname;
+    this.slug = slug;
     this.status = status;
     this.categoryId = categoryId;
     this.createdAt = createdAt;
   }
 
-  public static int insertArticle(String title, String thumbnail, String description, String content, String pathname,
+  public static int insertArticle(String title, String thumbnail, String description, String content, String slug,
       int categoryId) throws SQLException {
-    String statement = "INSERT INTO article (title, thumbnail, description, content, pathname, category_id) VALUES(?,?,?,?,?,?)";
-    return Database.update(statement, title, thumbnail, description, content, pathname, categoryId);
+    String statement = "INSERT INTO article (title, thumbnail, description, content, slug, category_id) VALUES(?,?,?,?,?,?)";
+    return Database.update(statement, title, thumbnail, description, content, slug, categoryId);
   }
 
-  public static ArticlePublic selectArticleByPathname(String pathname) throws SQLException {
-    final String select = Database.prepareStructureSQL(
+  public static ArticlePublic selectArticleBySlug(String slug) throws SQLException {
+    String select = Database.prepareStructureSQL(
         "SELECT ?,?,?,?,?,?,?,?",
         "A.title",
         "A.thumbnail",
         "A.content",
         "A.views",
-        "A.pathname",
+        "A.slug",
         "C.name AS category_name",
-        "C.pathname AS category_pathname",
+        "C.slug AS category_slug",
         "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
-    final String from = "FROM article AS A";
-    final String join = "JOIN category AS C ON A.category_id = C.id";
-    final String where = "WHERE A.pathname = ? AND A.status = 1";
+    String from = "FROM article AS A";
+    String join = "JOIN category AS C ON A.category_id = C.id";
+    String where = "WHERE A.slug = ? AND A.status = 1";
 
     String statement = select + " " + from + " " + join + " " + where;
-    ResultSet resultSet = Database.query(statement, pathname);
+    ResultSet resultSet = Database.query(statement, slug);
 
     ArticlePublic article = null;
     while (resultSet.next()) {
@@ -59,30 +59,75 @@ public class ArticleModel {
           "",
           resultSet.getString("content"),
           resultSet.getInt("views"),
-          resultSet.getString("pathname"),
+          resultSet.getString("slug"),
           resultSet.getString("category_name"),
-          resultSet.getString("category_pathname"),
+          resultSet.getString("category_slug"),
           resultSet.getString("created_at"));
     }
 
     return article;
   }
 
-  public static List<ArticlePublic> selectLatestArticles(int limit) throws SQLException {
-    final String select = Database.prepareStructureSQL(
+  public static List<ArticlePublic> selectArticlesByFilter(String keyword, String categorySlug, String orderBy,
+      int offset, int limit) throws SQLException {
+    String select = Database.prepareStructureSQL(
         "SELECT ?,?,?,?,?,?,?,?",
         "A.title",
         "A.thumbnail",
         "A.description",
         "A.views",
-        "A.pathname",
+        "A.slug",
         "C.name AS category_name",
-        "C.pathname AS category_pathname",
+        "C.slug AS category_slug",
         "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
-    final String from = "FROM article AS A";
-    final String join = "JOIN category AS C ON A.category_id = C.id";
-    final String where = "WHERE A.status = 1";
-    final String rest = "ORDER BY A.created_at DESC LIMIT ?";
+    String from = "FROM article AS A";
+    String join = "JOIN category AS C ON A.category_id = C.id";
+    String where = "WHERE A.status = 1 AND A.title LIKE ? AND C.slug LIKE ?";
+    String order = Database.prepareStructureSQL("ORDER BY ? DESC", orderBy);
+    String rest = "LIMIT ? OFFSET ?";
+
+    String statement = select + " " + from + " " + join + " " + where + " " + order + " " + rest;
+    ResultSet resultSet = Database.query(
+        statement,
+        keyword != null ? "%" + keyword + "%" : "%",
+        categorySlug != null ? categorySlug : "%",
+        limit,
+        offset);
+
+    List<ArticlePublic> articleList = new ArrayList<>();
+    while (resultSet.next()) {
+      ArticlePublic article = new ArticlePublic(
+          resultSet.getString("title"),
+          resultSet.getString("thumbnail"),
+          resultSet.getString("description"),
+          "",
+          resultSet.getInt("views"),
+          resultSet.getString("slug"),
+          resultSet.getString("category_name"),
+          resultSet.getString("category_slug"),
+          resultSet.getString("created_at"));
+
+      articleList.add(article);
+    }
+
+    return articleList;
+  }
+
+  public static List<ArticlePublic> selectLatestArticles(int limit) throws SQLException {
+    String select = Database.prepareStructureSQL(
+        "SELECT ?,?,?,?,?,?,?,?",
+        "A.title",
+        "A.thumbnail",
+        "A.description",
+        "A.views",
+        "A.slug",
+        "C.name AS category_name",
+        "C.slug AS category_slug",
+        "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
+    String from = "FROM article AS A";
+    String join = "JOIN category AS C ON A.category_id = C.id";
+    String where = "WHERE A.status = 1";
+    String rest = "ORDER BY A.created_at DESC LIMIT ?";
 
     String statement = select + " " + from + " " + join + " " + where + " " + rest;
     ResultSet resultSet = Database.query(statement, limit);
@@ -95,9 +140,9 @@ public class ArticleModel {
           resultSet.getString("description"),
           "",
           resultSet.getInt("views"),
-          resultSet.getString("pathname"),
+          resultSet.getString("slug"),
           resultSet.getString("category_name"),
-          resultSet.getString("category_pathname"),
+          resultSet.getString("category_slug"),
           resultSet.getString("created_at"));
 
       articleList.add(article);
@@ -106,8 +151,8 @@ public class ArticleModel {
     return articleList;
   }
 
-  public static void updateArticleViews(String pathname) throws SQLException {
-    String statement = "UPDATE article SET views = views + 1 WHERE pathname = ?";
-    Database.update(statement, pathname);
+  public static void updateArticleViews(String slug) throws SQLException {
+    String statement = "UPDATE article SET views = views + 1 WHERE slug = ?";
+    Database.update(statement, slug);
   }
 }

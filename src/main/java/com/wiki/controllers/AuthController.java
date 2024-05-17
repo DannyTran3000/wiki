@@ -25,7 +25,6 @@ public class AuthController extends HttpServlet {
    * @throws IOException  If an I/O error occurs while processing the request.
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.println("=======================");
     String action = request.getParameter("action");
 
     switch (action) {

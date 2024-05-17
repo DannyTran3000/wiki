@@ -2,6 +2,10 @@
   max-width: 114rem;
   margin: auto;
 }
+.article--full {
+  min-height: calc(100vh - 28.6rem);
+  padding-top: 12rem;
+}
 .article__list {
   padding-top: 3.2rem;
 }

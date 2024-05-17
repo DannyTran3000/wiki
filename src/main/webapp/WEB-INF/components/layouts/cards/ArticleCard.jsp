@@ -1,10 +1,10 @@
 <div class="article-card">
   <div class="article-card__thumbnail">
-    <img src="${article.thumbnail}" alt="${article.title}">
+    <img src="${articleCard.thumbnail}" alt="${articleCard.title}">
   </div>
   <div class="article-card__info">
-    <a href="/wiki-portal/articles${article.pathname}">
-      <h5 class="article-card__title">${article.title}</h5>
+    <a href="/wiki-portal/articles/${articleCard.slug}">
+      <h5 class="article-card__title">${articleCard.title}</h5>
     </a>
     <div class="article-card__figure">
       <div class="article-card__figure-view">
@@ -14,15 +14,15 @@
             fill="#999FAA" />
           <circle cx="8" cy="8.54407" r="3" stroke="#999FAA" stroke-width="2" />
         </svg>
-        <span>${article.views}</span>
+        <span>${articleCard.views}</span>
       </div>
       <div class="article-card__figure-date">
-        Published on ${article.createdAt}
+        Published on ${articleCard.createdAt}
       </div>
     </div>
-    <p class="article-card__description">${article.description}</p>
+    <p class="article-card__description">${articleCard.description}</p>
     <div class="article-card__action">
-      <a href="/wiki-portal/articles${article.pathname}" class="article-card__link">Read more</a>
+      <a href="/wiki-portal/articles/${articleCard.slug}" class="article-card__link">Read more</a>
     </div>
   </div>
 </div>

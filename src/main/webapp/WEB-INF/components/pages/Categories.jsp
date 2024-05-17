@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<% request.setAttribute("page_name", "Single" ); %>
-
+<% request.setAttribute("page_name", "Categories"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${single.title} | Wiki Portal</title>
+  <title>Categories | Wiki Portal</title>
 
   <%@ include file="../meta/Links.jsp" %>
 </head>
@@ -19,7 +18,7 @@
   <div id="${page_name}" class="wrapper">
     <%@ include file="../layouts/Header.jsp" %>
     <main>
-      <%@ include file="../layouts/sections/Article.jsp" %>
+      <%@ include file="../layouts/sections/Categories.jsp" %>
     </main>
     <%@ include file="../layouts/Footer.jsp" %>
 

@@ -1,13 +1,13 @@
 package com.wiki.services;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import com.wiki.helpers.DateTimeHelper;
 import com.wiki.helpers.SlugHelper;
 import com.wiki.interfaces.article.ArticlePublic;
 import com.wiki.models.ArticleModel;
-import com.wiki.models.CategoryModel;
 
 public class ArticleService {
   /**
@@ -22,17 +22,41 @@ public class ArticleService {
    */
   public static void create(String title, String thumbnail, String description, String content, int categoryId)
       throws SQLException {
-    // Get category pathname
-    String categoryPathname = CategoryModel.selectCategoryPathnameById(categoryId);
-
     // Get current date time
     String currentDateTime = DateTimeHelper.getCurrentDateTime();
 
     // Generate new slug by article title
     String slug = SlugHelper.generate(title + " " + currentDateTime);
-    String pathname = categoryPathname + "/" + slug;
 
-    ArticleModel.insertArticle(title, thumbnail, description, content, pathname, categoryId);
+    ArticleModel.insertArticle(title, thumbnail, description, content, slug, categoryId);
+  }
+
+  public static List<ArticlePublic> filter(String keyword, String categorySlug, String orderBy, int page)
+      throws SQLException {
+    // validate sort type
+    String[] sortTypes = { "date", "views", "title" };
+    boolean isValidSortType = Arrays.asList(sortTypes).contains(orderBy);
+    String currentSortType = isValidSortType ? orderBy : "date";
+    String sortColumn = "";
+    switch (currentSortType) {
+      case "title":
+        sortColumn = "A.title";
+        break;
+
+      case "views":
+        sortColumn = "A.views";
+        break;
+
+      default:
+        sortColumn = "A.created_at";
+    }
+
+    // calculate pagination
+    final int articlesPerPage = 10;
+    int currentPage = page > 0 ? page : 1;
+    int offset = (currentPage - 1) * 10;
+
+    return ArticleModel.selectArticlesByFilter(keyword, categorySlug, sortColumn, offset, articlesPerPage);
   }
 
   /**
@@ -48,21 +72,21 @@ public class ArticleService {
   }
 
   /**
-   * Reads a single article from the database based on the provided pathname.
+   * Reads a single article from the database based on the provided slug.
    *
    * This method performs the following actions:
-   * - Increases the view count of the article identified by the given pathname.
+   * - Increases the view count of the article identified by the given slug.
    * - Retrieves and returns the article from the database.
    *
-   * @param pathname the pathname of the article to be read
+   * @param slug the slug of the article to be read
    * @return the ArticlePublic object representing the article
-   * @throws SQLException if a database access error occurs or the pathname is
+   * @throws SQLException if a database access error occurs or the slug is
    *                      invalid
    */
-  public static ArticlePublic readSingle(String pathname) throws SQLException {
+  public static ArticlePublic readSingle(String slug) throws SQLException {
     // Increase views
-    ArticleModel.updateArticleViews(pathname);
+    ArticleModel.updateArticleViews(slug);
     // Get article
-    return ArticleModel.selectArticleByPathname(pathname);
+    return ArticleModel.selectArticleBySlug(slug);
   }
 }

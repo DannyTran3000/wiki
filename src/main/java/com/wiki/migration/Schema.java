@@ -44,7 +44,7 @@ public class Schema {
         "id INT PRIMARY KEY AUTO_INCREMENT",
         "name VARCHAR(255) NOT NULL",
         "icon VARCHAR(255) NOT NULL",
-        "pathname VARCHAR(255) NOT NULL UNIQUE",
+        "slug VARCHAR(255) NOT NULL UNIQUE",
         "status TINYINT DEFAULT 1 COMMENT '0: Inactive; 1: Active'",
         "created_at DATETIME DEFAULT CURRENT_TIMESTAMP");
 
@@ -66,7 +66,7 @@ public class Schema {
         "description TEXT NOT NULL",
         "content TEXT NOT NULL",
         "views INT DEFAULT 0",
-        "pathname VARCHAR(255) NOT NULL UNIQUE",
+        "slug VARCHAR(255) NOT NULL UNIQUE",
         "category_id INT NOT NULL",
         "status TINYINT DEFAULT 1 COMMENT '0: Inactive; 1: Active'",
         "created_at DATETIME DEFAULT CURRENT_TIMESTAMP");

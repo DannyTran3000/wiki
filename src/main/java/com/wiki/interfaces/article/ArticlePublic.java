@@ -1,19 +1,19 @@
 package com.wiki.interfaces.article;
 
 public class ArticlePublic {
-  public String title, thumbnail, description, content, pathname, categoryName, categoryPathname, createdAt;
+  public String title, thumbnail, description, content, slug, categoryName, categorySlug, createdAt;
   public int views;
 
-  public ArticlePublic(String title, String thumbnail, String description, String content, int views, String pathname,
-      String categoryName, String categoryPathname, String timestamp) {
+  public ArticlePublic(String title, String thumbnail, String description, String content, int views, String slug,
+      String categoryName, String categorySlug, String timestamp) {
     this.title = title;
     this.thumbnail = thumbnail;
     this.description = description;
     this.content = content;
     this.views = views;
-    this.pathname = pathname;
+    this.slug = slug;
     this.categoryName = categoryName;
-    this.categoryPathname = categoryPathname;
+    this.categorySlug = categorySlug;
     this.createdAt = timestamp;
   }
 
@@ -37,16 +37,16 @@ public class ArticlePublic {
     return views;
   }
 
-  public String getPathname() {
-    return pathname;
+  public String getSlug() {
+    return slug;
   }
 
   public String getCategoryName() {
     return categoryName;
   }
 
-  public String getCategoryPathname() {
-    return categoryPathname;
+  public String getCategorySlug() {
+    return categorySlug;
   }
 
   public String getCreatedAt() {

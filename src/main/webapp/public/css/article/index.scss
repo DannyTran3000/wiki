@@ -1,6 +1,11 @@
 .article {
   max-width: 114rem;
   margin: auto;
+
+  &--full {
+    min-height: calc(100vh - 28.6rem);
+    padding-top: 12rem;
+  }
   
   &__list {
     padding-top: 3.2rem;

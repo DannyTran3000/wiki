@@ -1,22 +1,42 @@
 .category-card {
   display: flex;
   border: 0.2rem solid #f2f2f2;
+  border-radius: 1rem;
+  color: #000;
 }
 .category-card__left {
   width: 55%;
-  padding: 2rem 0 0.4rem 3.2rem;
+  padding: 2rem 0 1.5rem 3.2rem;
   display: flex;
   flex-direction: column;
   border-right: 0.2rem solid #f2f2f2;
 }
 .category-card__icon {
   position: relative;
-  width: 5rem;
-  height: 5rem;
+  width: 7.4rem;
+  height: 7.4rem;
   padding: 1.2rem;
   background: #f2f2f2;
-  border-radius: 50%;
+  border-radius: 1rem;
+}
+.category-card__name {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2.1rem;
 }
 .category-card__right {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.category-card__badge {
+  font-size: 4rem;
+  font-weight: 700;
+}
+.category-card__tag {
+  font-size: 2rem;
+  font-weight: 700;
 }/*# sourceMappingURL=index.css.map */

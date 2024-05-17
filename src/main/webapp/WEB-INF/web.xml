@@ -16,6 +16,24 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>CategoriesServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.CategoriesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CategoriesServlet</servlet-name>
+    <url-pattern>/categories</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ArticlesServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.ArticlesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticlesServlet</servlet-name>
+    <url-pattern>/articles</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SingleServlet</servlet-name>
     <servlet-class>com.wiki.controllers.SingleController</servlet-class>
   </servlet>
