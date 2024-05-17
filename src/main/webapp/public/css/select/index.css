@@ -2,6 +2,9 @@
   position: relative;
   z-index: 10;
 }
+.select[data-toggle=true] .select__options {
+  display: block;
+}
 .select__toggle {
   position: relative;
   width: 100%;
@@ -23,6 +26,7 @@
   background: #000;
   content: "";
   transform: translateY(-50%);
+  pointer-events: none;
 }
 .select__options {
   position: absolute;
@@ -32,6 +36,7 @@
   width: 100%;
   max-height: 24rem;
   padding: 1.2rem 0;
+  display: none;
   overflow: auto;
   background: #fff;
   border-radius: 1.2rem;
@@ -40,7 +45,12 @@
 .select__option {
   height: 3.2rem;
   padding: 0 1.2rem;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: background 0.25s ease-in-out;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   cursor: pointer;
 }
 .select__option:hover {

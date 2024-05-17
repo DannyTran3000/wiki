@@ -2,6 +2,12 @@
   position: relative;
   z-index: 10;
 
+  &[data-toggle="true"] {
+    .select__options {
+      display: block;
+    }
+  }
+
   &__toggle {
     position: relative;
 
@@ -30,6 +36,8 @@
       content: "";
 
       transform: translateY(-50%);
+
+      pointer-events: none;
     }
   }
 
@@ -43,6 +51,7 @@
     max-height: 24rem;
     padding: 1.2rem 0;
 
+    display: none;
     overflow: auto;
 
     background: #fff;
@@ -54,7 +63,15 @@
     height: 3.2rem;
     padding: 0 1.2rem;
 
+    display: -webkit-box;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
     transition: background 0.25s ease-in-out;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 
     cursor: pointer;
 
