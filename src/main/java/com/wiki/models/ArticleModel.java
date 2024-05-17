@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wiki.config.Database;
+import com.wiki.helpers.PaginationHelper;
 import com.wiki.interfaces.article.ArticlePublic;
+import com.wiki.interfaces.pagination.PaginationPublic;
 
 public class ArticleModel {
   public int id, status, categoryId;
@@ -69,7 +71,7 @@ public class ArticleModel {
   }
 
   public static List<ArticlePublic> selectArticlesByFilter(String keyword, String categorySlug, String orderBy,
-      int offset, int limit) throws SQLException {
+      String orderType, int offset, int limit) throws SQLException {
     String select = Database.prepareStructureSQL(
         "SELECT ?,?,?,?,?,?,?,?",
         "A.title",
@@ -83,7 +85,7 @@ public class ArticleModel {
     String from = "FROM article AS A";
     String join = "JOIN category AS C ON A.category_id = C.id";
     String where = "WHERE A.status = 1 AND A.title LIKE ? AND C.slug LIKE ?";
-    String order = Database.prepareStructureSQL("ORDER BY ? DESC", orderBy);
+    String order = Database.prepareStructureSQL("ORDER BY ? ?", orderBy, orderType);
     String rest = "LIMIT ? OFFSET ?";
 
     String statement = select + " " + from + " " + join + " " + where + " " + order + " " + rest;
@@ -111,6 +113,37 @@ public class ArticleModel {
     }
 
     return articleList;
+  }
+
+  public static PaginationPublic selectCountArticlesByFilter(String keyword, String categorySlug, String orderBy,
+      String orderType, int offset, int limit) throws SQLException {
+    String select = "SELECT COUNT(*) AS total_articles";
+    String from = "FROM article AS A";
+    String join = "JOIN category AS C ON A.category_id = C.id";
+    String where = "WHERE A.status = 1 AND A.title LIKE ? AND C.slug LIKE ?";
+    String order = Database.prepareStructureSQL("ORDER BY ? ?", orderBy, orderType);
+
+    String statement = select + " " + from + " " + join + " " + where + " " + order;
+    ResultSet resultSet = Database.query(
+        statement,
+        keyword != null ? "%" + keyword + "%" : "%",
+        categorySlug != null ? categorySlug : "%");
+
+    int totalPages = 0;
+    while (resultSet.next()) {
+      int count = resultSet.getInt("total_articles");
+      if (count > 0) {
+        totalPages = count / limit;
+      }
+    }
+
+    int perPage = limit;
+    int currentPage = (offset / limit) + 1;
+    System.out.println("================" + totalPages);
+    List<String> display = PaginationHelper.getDisplay(totalPages, currentPage);
+
+    return new PaginationPublic(String.valueOf(currentPage), String.valueOf(totalPages), String.valueOf(perPage),
+        display);
   }
 
   public static List<ArticlePublic> selectLatestArticles(int limit) throws SQLException {

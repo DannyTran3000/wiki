@@ -12,4 +12,32 @@
     width: calc(25% - 4rem);
     margin: 0 1rem 2rem 1rem;
   }
+
+  &__primary {
+    height: 4rem;
+    margin-right: 1.2rem;
+    padding: 0 2.4rem;
+
+    background: #000;
+    border: none;
+    border-radius: 1.2rem;
+
+    color: #fff;
+
+    cursor: pointer;
+  }
+
+  &__secondary {
+    height: 4rem;
+    margin-right: 1.2rem;
+    padding: 0 2.4rem;
+
+    background: #d0d0d0;
+    border: none;
+    border-radius: 1.2rem;
+
+    color: #000;
+
+    cursor: pointer;
+  }
 }

@@ -4,6 +4,8 @@ dropdowns.forEach(dropdown => {
   const toggle = dropdown.querySelector('.dropdown__toggle')
   if (toggle) {
     toggle.addEventListener('click', () => {
+      dropdowns.forEach(item => item.setAttribute('data-toggle', "false"))
+
       dropdown.setAttribute('data-toggle', "true")
     })
   }

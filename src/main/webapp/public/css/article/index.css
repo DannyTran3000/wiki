@@ -6,10 +6,41 @@
   min-height: calc(100vh - 28.6rem);
   padding-top: 12rem;
 }
+.article--full .article__list-item {
+  max-width: unset;
+}
+.article--full .article-card {
+  align-items: flex-start;
+}
+.article--full .article-card__thumbnail {
+  width: 30rem;
+  padding-top: 30rem;
+}
 .article__list {
   padding-top: 3.2rem;
 }
 .article__list-item {
   max-width: 93rem;
   margin-bottom: 4.8rem;
+}
+.article__pagination {
+  padding-top: 2.4rem;
+  display: flex;
+}
+.article__page-number {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d0d0d0;
+  border-radius: 1.2rem;
+  color: #000;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.article__page-number.--active {
+  background: #000;
+  color: #fff;
 }/*# sourceMappingURL=index.css.map */

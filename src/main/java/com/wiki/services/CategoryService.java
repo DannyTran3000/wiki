@@ -29,4 +29,8 @@ public class CategoryService {
   public static List<CategoryPublic> read() throws SQLException {
     return CategoryModel.selectAll();
   }
+
+  public static String readName(String slug) throws SQLException {
+    return CategoryModel.selectCategoryNameBySlug(slug);
+  }
 }

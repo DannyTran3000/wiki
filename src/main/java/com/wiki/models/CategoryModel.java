@@ -57,6 +57,18 @@ public class CategoryModel {
     return categoryList;
   }
 
+  public static String selectCategoryNameBySlug(String slug) throws SQLException {
+    String statement = "SELECT name FROM category WHERE status = 1 AND slug = ?";
+    ResultSet resultSet = Database.query(statement, slug);
+
+    String name = "";
+    while (resultSet.next()) {
+      name = resultSet.getString("name");
+    }
+
+    return name;
+  }
+
   public static String selectCategorySlugById(int id) throws SQLException {
     String statement = "SELECT slug FROM category WHERE id = ? AND status = 1";
     ResultSet resultSet = Database.query(statement, id);

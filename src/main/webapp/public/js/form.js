@@ -309,3 +309,62 @@ resetNoteInputs.forEach(input => {
     noteInput(input, '')
   })
 })
+
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+const filterArticle = (p) => {
+  const filterForm = document.querySelector('#article-filter-form')
+  if (!filterForm) return false
+
+  const keywordInput = filterForm.querySelector('input[name="keyword"]')
+  const categoryInput = filterForm.querySelector('input[name="category"]')
+  const sortInput = filterForm.querySelector('input[name="sort"]')
+
+  const keyword = keywordInput?.value ? `keyword=${keywordInput.value}` : ''
+  const category = categoryInput?.value ? `category=${categoryInput.value}` : ''
+  const sort = sortInput?.value ? `sort=${sortInput.value}` : ''
+  const page = `page=${p || 1}`
+
+  const params = [keyword, category, sort, page].filter(item => !!item)
+  const path = `/wiki-portal/articles${params.length > 0 ? `?${params.join('&')}` : ''}`;
+
+  window.location.href = path
+
+  return false
+}
+
+const paginationArticle = (e) => {
+  const page = e.target.getAttribute('data-value')
+  if (parseInt(page))
+  filterArticle(parseInt(page))
+}
+
+const resetFilterArticle = () => {
+  const filterForm = document.querySelector('#article-filter-form')
+  if (!filterForm) return false
+
+  const keywordInput = filterForm.querySelector('input[name="keyword"]')
+  const categoryInput = filterForm.querySelector('input[name="category"]')
+  const sortInput = filterForm.querySelector('input[name="sort"]')
+
+  if (keywordInput) keywordInput.value = ""
+  if (categoryInput) categoryInput.value = ""
+  if (sortInput) sortInput.value = "date"
+
+  const categorySelect = filterForm.querySelector('.select[data-target="category"]')
+  if (categorySelect) {
+    const categoryToggle = categorySelect.querySelector('.select__toggle')
+    if (categoryToggle) categoryToggle.innerHTML = "Choose a category"
+  }
+  const sortSelect = filterForm.querySelector('.select[data-target="sort"]')
+  if (sortSelect) {
+    const sortToggle = sortSelect.querySelector('.select__toggle')
+    if (sortToggle) sortToggle.innerHTML = "Sort by date"
+  }
+
+  return false
+}

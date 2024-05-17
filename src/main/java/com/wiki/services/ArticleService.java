@@ -7,6 +7,7 @@ import java.util.List;
 import com.wiki.helpers.DateTimeHelper;
 import com.wiki.helpers.SlugHelper;
 import com.wiki.interfaces.article.ArticlePublic;
+import com.wiki.interfaces.pagination.PaginationPublic;
 import com.wiki.models.ArticleModel;
 
 public class ArticleService {
@@ -38,9 +39,11 @@ public class ArticleService {
     boolean isValidSortType = Arrays.asList(sortTypes).contains(orderBy);
     String currentSortType = isValidSortType ? orderBy : "date";
     String sortColumn = "";
+    String sortType = "DESC";
     switch (currentSortType) {
       case "title":
         sortColumn = "A.title";
+        sortType = "ASC";
         break;
 
       case "views":
@@ -52,11 +55,41 @@ public class ArticleService {
     }
 
     // calculate pagination
-    final int articlesPerPage = 10;
+    final int articlesPerPage = 5;
     int currentPage = page > 0 ? page : 1;
-    int offset = (currentPage - 1) * 10;
+    int offset = (currentPage - 1) * articlesPerPage;
 
-    return ArticleModel.selectArticlesByFilter(keyword, categorySlug, sortColumn, offset, articlesPerPage);
+    return ArticleModel.selectArticlesByFilter(keyword, categorySlug, sortColumn, sortType, offset, articlesPerPage);
+  }
+
+  public static PaginationPublic filterPagination(String keyword, String categorySlug, String orderBy, int page)
+      throws SQLException {
+    // validate sort type
+    String[] sortTypes = { "date", "views", "title" };
+    boolean isValidSortType = Arrays.asList(sortTypes).contains(orderBy);
+    String currentSortType = isValidSortType ? orderBy : "date";
+    String sortColumn = "";
+    String sortType = "DESC";
+    switch (currentSortType) {
+      case "title":
+        sortColumn = "A.title";
+        sortType = "ASC";
+        break;
+
+      case "views":
+        sortColumn = "A.views";
+        break;
+
+      default:
+        sortColumn = "A.created_at";
+    }
+
+    // calculate pagination
+    final int articlesPerPage = 5;
+    int currentPage = page > 0 ? page : 1;
+    int offset = (currentPage - 1) * articlesPerPage;
+
+    return ArticleModel.selectCountArticlesByFilter(keyword, categorySlug, sortColumn, sortType, offset, articlesPerPage);
   }
 
   /**

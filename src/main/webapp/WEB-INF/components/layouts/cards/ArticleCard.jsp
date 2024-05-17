@@ -14,7 +14,7 @@
             fill="#999FAA" />
           <circle cx="8" cy="8.54407" r="3" stroke="#999FAA" stroke-width="2" />
         </svg>
-        <span>${articleCard.views}</span>
+        <span>${articleCard.views} - ${articleCard.categoryName}</span>
       </div>
       <div class="article-card__figure-date">
         Published on ${articleCard.createdAt}
