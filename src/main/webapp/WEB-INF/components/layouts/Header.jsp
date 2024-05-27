@@ -12,11 +12,11 @@
       <li class="header__nav-item ${page_name eq 'Categories' ? 'header__nav-item--active' : ''}">
         <a href="/wiki-portal/categories" class="header__nav-link">Categories</a>
       </li>
-      <li class="header__nav-item ${page_name eq 'Articles' ? 'header__nav-item--active' : ''}">
+      <li class="header__nav-item ${page_name eq 'Articles' || page_name eq 'Single' ? 'header__nav-item--active' : ''}">
         <a href="/wiki-portal/articles" class="header__nav-link">Articles</a>
       </li>
     </ul>
-    <c:if test="page_name not eq 'Articles'">
+    <c:if test="${page_name != 'Articles'}">
       <div class="header__nav-list" data-align="center">
         <%@ include file="./forms/SearchBox.jsp" %>
       </div>

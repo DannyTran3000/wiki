@@ -26,6 +26,7 @@ public class AuthMiddleware {
    * @throws ServletException If there is an issue during servlet processing.
    * @throws IOException      If an I/O error occurs during servlet processing.
    */
+  @SuppressWarnings("null")
   public static void authorize(HttpServletRequest request, HttpServletResponse response, int[] permissions)
       throws ServletException, IOException {
     // Read the access token from the request's cookies using a helper method
@@ -43,20 +44,22 @@ public class AuthMiddleware {
     }
 
     if (permissions != null && permissions.length > 0) {
-      // Determine if the user should be redirected to an unauthorized page based on
-      // permissions
-      boolean shouldRedirectToUnauthorized = false;
-      for (int i = 0; i < permissions.length; i++) {
-        // Check if the user's role matches any of the required permissions
-        if (user.role == permissions[i]) {
-          // User has required permission
-          shouldRedirectToUnauthorized = true;
-          break;
+      boolean shouldRedirectToUnauthorized = true;
+      if (user != null) {
+        // Determine if the user should be redirected to an unauthorized page based on
+        // permissions
+        for (int i = 0; i < permissions.length; i++) {
+          // Check if the user's role matches any of the required permissions
+          if (user.role == permissions[i]) {
+            // User has required permission
+            shouldRedirectToUnauthorized = false;
+            break;
+          }
         }
       }
 
       // Redirect to an unauthorized page if the user lacks required permissions
-      if (!shouldRedirectToUnauthorized) {
+      if (shouldRedirectToUnauthorized) {
         // Set attributes for the error page to display appropriate message
         request.setAttribute("page_code", 401);
         request.setAttribute("page_message", "Unauthorized: You have no permission to access this page.");

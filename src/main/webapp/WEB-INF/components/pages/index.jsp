@@ -19,6 +19,7 @@
     <%@ include file="../layouts/Header.jsp" %>
     <main>
       <%@ include file="../layouts/sections/Hero.jsp" %>
+      <%@ include file="../layouts/sections/HotArticles.jsp" %>
       <%@ include file="../layouts/sections/LatestArticles.jsp" %>
       <%@ include file="../layouts/sections/Categories.jsp" %>
     </main>

@@ -26,6 +26,7 @@
   position: absolute;
   top: calc(100% + 1.2rem);
   right: -1.2rem;
+  z-index: 100;
   width: 20rem;
   padding: 1.2rem;
   display: none;
@@ -35,10 +36,12 @@
 }
 .dropdown__option {
   padding: 0.8rem;
+  line-height: 1.2rem !important;
 }
 .dropdown__option-content {
   color: #000;
-  line-height: 1.8rem;
+  font-size: 1.2rem;
+  line-height: 1.8rem !important;
   cursor: pointer;
 }
 .dropdown__option-content:hover {

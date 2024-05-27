@@ -1,0 +1,39 @@
+.table__tr {
+  display: flex;
+}
+.table__th, .table__td {
+  height: 8rem;
+  padding: 0 0.8rem;
+  display: flex;
+  align-items: center;
+}
+.table__th a, .table__td a {
+  color: #000;
+}
+.table__th a:hover, .table__td a:hover {
+  text-decoration: underline;
+}
+.table__th {
+  height: 5.6rem;
+  background: #000;
+  color: #fff;
+}
+.table__tr:nth-child(2n+1) .table__td {
+  background: #f0f0f0;
+}
+.table__td-content {
+  height: 3.2rem;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.table__link {
+  margin-bottom: 2.4rem;
+  display: inline-block;
+  color: #000;
+}
+.table__link:hover {
+  text-decoration: underline;
+}/*# sourceMappingURL=index.css.map */

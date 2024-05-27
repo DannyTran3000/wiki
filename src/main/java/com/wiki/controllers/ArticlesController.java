@@ -58,8 +58,7 @@ public class ArticlesController extends HttpServlet {
           break;
       }
     }
-    System.out.println("-----------------" + keyword);
-    FilterSystemPublic fs = new FilterSystemPublic(keyword, categorySlug, categoryName, orderBy, orderNote);
+    FilterSystemPublic fs = new FilterSystemPublic(keyword, categorySlug, categoryName, orderBy, orderNote, null);
 
     // Get articles by filter and categories
     List<CategoryPublic> categories = new ArrayList<>();
@@ -67,8 +66,8 @@ public class ArticlesController extends HttpServlet {
     PaginationPublic pagination = null;
     try {
       categories = CategoryService.read();
-      articles = ArticleService.filter(keyword, categorySlug, orderBy, parsePage);
-      pagination = ArticleService.filterPagination(keyword, categorySlug, orderBy, parsePage);
+      articles = ArticleService.filter(keyword, categorySlug, 1, orderBy, parsePage);
+      pagination = ArticleService.filterPagination(keyword, categorySlug, 1, orderBy, parsePage);
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

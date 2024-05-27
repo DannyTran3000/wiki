@@ -35,21 +35,23 @@ public class ArticleModel {
     return Database.update(statement, title, thumbnail, description, content, slug, categoryId);
   }
 
-  public static ArticlePublic selectArticleBySlug(String slug) throws SQLException {
+  public static ArticlePublic selectArticleBySlug(String slug, boolean shouldCheckStatus) throws SQLException {
     String select = Database.prepareStructureSQL(
-        "SELECT ?,?,?,?,?,?,?,?",
+        "SELECT ?,?,?,?,?,?,?,?,?,?,?",
         "A.title",
         "A.thumbnail",
+        "A.description",
         "A.content",
         "A.views",
         "A.slug",
+        "C.id AS category_id",
         "C.name AS category_name",
         "C.slug AS category_slug",
+        "A.status",
         "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
     String from = "FROM article AS A";
     String join = "JOIN category AS C ON A.category_id = C.id";
-    String where = "WHERE A.slug = ? AND A.status = 1";
-
+    String where = "WHERE A.slug = ?" + (shouldCheckStatus ? " AND A.status = 1" : "");
     String statement = select + " " + from + " " + join + " " + where;
     ResultSet resultSet = Database.query(statement, slug);
 
@@ -58,12 +60,14 @@ public class ArticleModel {
       article = new ArticlePublic(
           resultSet.getString("title"),
           resultSet.getString("thumbnail"),
-          "",
+          resultSet.getString("description"),
           resultSet.getString("content"),
           resultSet.getInt("views"),
           resultSet.getString("slug"),
+          resultSet.getInt("category_id"),
           resultSet.getString("category_name"),
           resultSet.getString("category_slug"),
+          resultSet.getInt("status"),
           resultSet.getString("created_at"));
     }
 
@@ -71,26 +75,29 @@ public class ArticleModel {
   }
 
   public static List<ArticlePublic> selectArticlesByFilter(String keyword, String categorySlug, String orderBy,
-      String orderType, int offset, int limit) throws SQLException {
+      String orderType, int status, int offset, int limit) throws SQLException {
     String select = Database.prepareStructureSQL(
-        "SELECT ?,?,?,?,?,?,?,?",
+        "SELECT ?,?,?,?,?,?,?,?,?,?",
         "A.title",
         "A.thumbnail",
         "A.description",
         "A.views",
         "A.slug",
+        "C.id AS category_id",
         "C.name AS category_name",
         "C.slug AS category_slug",
+        "A.status",
         "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
     String from = "FROM article AS A";
     String join = "JOIN category AS C ON A.category_id = C.id";
-    String where = "WHERE A.status = 1 AND A.title LIKE ? AND C.slug LIKE ?";
+    String where = "WHERE A.status = ? AND A.title LIKE ? AND C.slug LIKE ?";
     String order = Database.prepareStructureSQL("ORDER BY ? ?", orderBy, orderType);
     String rest = "LIMIT ? OFFSET ?";
 
     String statement = select + " " + from + " " + join + " " + where + " " + order + " " + rest;
     ResultSet resultSet = Database.query(
         statement,
+        status,
         keyword != null ? "%" + keyword + "%" : "%",
         categorySlug != null ? categorySlug : "%",
         limit,
@@ -105,8 +112,10 @@ public class ArticleModel {
           "",
           resultSet.getInt("views"),
           resultSet.getString("slug"),
+          resultSet.getInt("category_id"),
           resultSet.getString("category_name"),
           resultSet.getString("category_slug"),
+          resultSet.getInt("status"),
           resultSet.getString("created_at"));
 
       articleList.add(article);
@@ -116,16 +125,17 @@ public class ArticleModel {
   }
 
   public static PaginationPublic selectCountArticlesByFilter(String keyword, String categorySlug, String orderBy,
-      String orderType, int offset, int limit) throws SQLException {
+      String orderType, int status, int offset, int limit) throws SQLException {
     String select = "SELECT COUNT(*) AS total_articles";
     String from = "FROM article AS A";
     String join = "JOIN category AS C ON A.category_id = C.id";
-    String where = "WHERE A.status = 1 AND A.title LIKE ? AND C.slug LIKE ?";
+    String where = "WHERE A.status = ? AND A.title LIKE ? AND C.slug LIKE ?";
     String order = Database.prepareStructureSQL("ORDER BY ? ?", orderBy, orderType);
 
     String statement = select + " " + from + " " + join + " " + where + " " + order;
     ResultSet resultSet = Database.query(
         statement,
+        status,
         keyword != null ? "%" + keyword + "%" : "%",
         categorySlug != null ? categorySlug : "%");
 
@@ -134,28 +144,75 @@ public class ArticleModel {
       int count = resultSet.getInt("total_articles");
       if (count > 0) {
         totalPages = count / limit;
+        if (count % limit > 0) totalPages++;
       }
     }
 
+
     int perPage = limit;
     int currentPage = (offset / limit) + 1;
-    System.out.println("================" + totalPages);
     List<String> display = PaginationHelper.getDisplay(totalPages, currentPage);
 
     return new PaginationPublic(String.valueOf(currentPage), String.valueOf(totalPages), String.valueOf(perPage),
         display);
   }
 
-  public static List<ArticlePublic> selectLatestArticles(int limit) throws SQLException {
+  public static List<ArticlePublic> selectHighestViewsArticles(int limit) throws SQLException {
     String select = Database.prepareStructureSQL(
-        "SELECT ?,?,?,?,?,?,?,?",
+        "SELECT ?,?,?,?,?,?,?,?,?,?,?",
         "A.title",
         "A.thumbnail",
         "A.description",
+        "A.content",
         "A.views",
         "A.slug",
+        "C.id AS category_id",
         "C.name AS category_name",
         "C.slug AS category_slug",
+        "A.status",
+        "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
+    String from = "FROM article AS A";
+    String join = "JOIN category AS C ON A.category_id = C.id";
+    String where = "WHERE A.status = 1";
+    String rest = "ORDER BY A.views DESC LIMIT ?";
+
+    String statement = select + " " + from + " " + join + " " + where + " " + rest;
+    ResultSet resultSet = Database.query(statement, limit);
+
+    List<ArticlePublic> articleList = new ArrayList<>();
+    while (resultSet.next()) {
+      ArticlePublic article = new ArticlePublic(
+          resultSet.getString("title"),
+          resultSet.getString("thumbnail"),
+          resultSet.getString("description"),
+          resultSet.getString("content"),
+          resultSet.getInt("views"),
+          resultSet.getString("slug"),
+          resultSet.getInt("category_id"),
+          resultSet.getString("category_name"),
+          resultSet.getString("category_slug"),
+          resultSet.getInt("status"),
+          resultSet.getString("created_at"));
+
+      articleList.add(article);
+    }
+
+    return articleList;
+  }
+
+  public static List<ArticlePublic> selectLatestArticles(int limit) throws SQLException {
+    String select = Database.prepareStructureSQL(
+        "SELECT ?,?,?,?,?,?,?,?,?,?,?",
+        "A.title",
+        "A.thumbnail",
+        "A.description",
+        "A.content",
+        "A.views",
+        "A.slug",
+        "C.id AS category_id",
+        "C.name AS category_name",
+        "C.slug AS category_slug",
+        "A.status",
         "DATE_FORMAT(A.created_at, '%d-%m-%Y') AS created_at");
     String from = "FROM article AS A";
     String join = "JOIN category AS C ON A.category_id = C.id";
@@ -171,11 +228,13 @@ public class ArticleModel {
           resultSet.getString("title"),
           resultSet.getString("thumbnail"),
           resultSet.getString("description"),
-          "",
+          resultSet.getString("content"),
           resultSet.getInt("views"),
           resultSet.getString("slug"),
+          resultSet.getInt("category_id"),
           resultSet.getString("category_name"),
           resultSet.getString("category_slug"),
+          resultSet.getInt("status"),
           resultSet.getString("created_at"));
 
       articleList.add(article);
@@ -187,5 +246,11 @@ public class ArticleModel {
   public static void updateArticleViews(String slug) throws SQLException {
     String statement = "UPDATE article SET views = views + 1 WHERE slug = ?";
     Database.update(statement, slug);
+  }
+
+  public static void updateArticleBySlug(String title, String thumbnail, String description, String content,
+      int category, int status, String slug) throws SQLException {
+    String statement = "UPDATE article SET title = ?, thumbnail = ?, description = ?, content = ?, category_id = ?, status = ? WHERE slug = ?";
+    Database.update(statement, title, thumbnail, description, content, category, status, slug);
   }
 }

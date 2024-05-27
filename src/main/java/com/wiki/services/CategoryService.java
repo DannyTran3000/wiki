@@ -33,4 +33,16 @@ public class CategoryService {
   public static String readName(String slug) throws SQLException {
     return CategoryModel.selectCategoryNameBySlug(slug);
   }
+
+  public static CategoryPublic readSingle(String slug) throws SQLException {
+    return CategoryModel.selectCategoryBySlug(slug);
+  }
+
+  public static void update(String name, String icon, String slug) throws SQLException {
+    CategoryModel.updateCategory(name, icon, slug);
+  }
+
+  public static void delete(String slug) throws SQLException {
+    CategoryModel.deleteCategory(slug);
+  }
 }

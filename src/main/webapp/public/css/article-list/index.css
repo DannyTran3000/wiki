@@ -1,0 +1,39 @@
+.article {
+  max-width: 114rem;
+  margin: auto;
+}
+.article--full {
+  padding-top: 12rem;
+}
+.article__list {
+  width: calc(100% + 3.2rem);
+  margin: 0 -1.6rem;
+  padding-top: 3.2rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.article__list-item {
+  width: calc(25% - 3.2rem);
+  margin: 0 1.6rem 3.2rem 1.6rem;
+}
+.article__pagination {
+  padding-top: 2.4rem;
+  display: flex;
+}
+.article__page-number {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d0d0d0;
+  border-radius: 1.2rem;
+  color: #000;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.article__page-number.--active {
+  background: #000;
+  color: #fff;
+}/*# sourceMappingURL=index.css.map */

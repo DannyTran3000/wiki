@@ -1,7 +1,7 @@
 .article-filter {
   &__list {
-    width: calc(100% + 2rem);
-    margin: 0 -1rem;
+    width: calc(100% + 3.2rem);
+    margin: 0 -1.6rem;
     padding-top: 1rem;
 
     display: flex;
@@ -9,8 +9,8 @@
   }
 
   &__item {
-    width: calc(25% - 4rem);
-    margin: 0 1rem 2rem 1rem;
+    width: calc(25% - 3.2rem);
+    margin: 0 1.6rem 3.2rem 1.6rem;
   }
 
   &__primary {

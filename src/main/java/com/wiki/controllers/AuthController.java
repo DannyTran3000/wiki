@@ -333,8 +333,7 @@ public class AuthController extends HttpServlet {
   }
 
   private static class RequestLoginBody {
-    private String email;
-    private String password;
+    private String email, password;
 
     public String getEmail() {
       return email;
@@ -346,9 +345,7 @@ public class AuthController extends HttpServlet {
   }
 
   private static class RequestRegisterBody {
-    private String fullname;
-    private String email;
-    private String password;
+    private String fullname, email, password;
 
     public String getFullname() {
       return fullname;

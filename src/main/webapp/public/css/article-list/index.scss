@@ -1,0 +1,51 @@
+.article {
+  max-width: 114rem;
+  margin: auto;
+
+  &--full {
+    padding-top: 12rem;
+  }
+
+  &__list {
+    width: calc(100% + 3.2rem);
+    margin: 0 -1.6rem;
+    padding-top: 3.2rem;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__list-item {
+    width: calc(25% - 3.2rem);
+    margin: 0 1.6rem 3.2rem 1.6rem;
+  }
+
+  &__pagination {
+    padding-top: 2.4rem;
+    
+    display: flex;
+  }
+
+  &__page-number {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1.2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #d0d0d0;
+    border-radius: 1.2rem;
+
+    color: #000;
+    font-size: 1.4rem;
+    font-weight: 600;
+
+    &.--active {
+      background: #000;
+
+      color: #fff;
+    }
+  }
+}

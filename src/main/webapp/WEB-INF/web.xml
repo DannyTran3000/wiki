@@ -43,6 +43,46 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AdminCategoryServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.admin.CategoriesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminCategoryServlet</servlet-name>
+    <url-pattern>/admin/categories</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminCategoryDetailServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.admin.CategoryDetailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminCategoryDetailServlet</servlet-name>
+    <url-pattern>/admin/categories/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminArticleServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.admin.ArticlesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminArticleServlet</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminArticleServlet</servlet-name>
+    <url-pattern>/admin/articles</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AdminArticleDetailServlet</servlet-name>
+    <servlet-class>com.wiki.controllers.admin.ArticleDetailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminArticleDetailServlet</servlet-name>
+    <url-pattern>/admin/articles/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>com.wiki.controllers.AuthController</servlet-class>
   </servlet>

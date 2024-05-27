@@ -6,5 +6,7 @@
         fill="#888" />
     </svg>
   </div>
-  <input id="search-box" type="text" class="search-box__input" placeholder="Type the name of your keyword...">
+  <form action="/wiki-portal/articles" method="GET" style="width: 100%;">
+    <input id="search-box" type="text" class="search-box__input" name="keyword" placeholder="Search articles...">
+  </form>
 </div>

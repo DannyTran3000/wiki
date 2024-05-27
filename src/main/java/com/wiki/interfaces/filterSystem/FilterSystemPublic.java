@@ -1,14 +1,15 @@
 package com.wiki.interfaces.filterSystem;
 
 public class FilterSystemPublic {
-  public String keyword, category, categoryValue, sort, sortValue;
+  public String keyword, category, categoryValue, sort, sortValue, showHidden;
 
-  public FilterSystemPublic(String keyword, String category, String categoryValue, String sort, String sortValue) {
+  public FilterSystemPublic(String keyword, String category, String categoryValue, String sort, String sortValue, String showHidden) {
     this.keyword = keyword;
     this.category = category;
     this.categoryValue = categoryValue;
     this.sort = sort;
     this.sortValue = sortValue;
+    this.showHidden = showHidden;
   }
 
   public String getKeyword() {
@@ -30,5 +31,9 @@ public class FilterSystemPublic {
   
   public String getSortValue() {
     return sortValue;
+  }
+
+  public String getShowHidden() {
+    return showHidden;
   }
 }

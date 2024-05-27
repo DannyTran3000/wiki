@@ -6,5 +6,38 @@
   
     border: 0.1rem solid #000;
     border-radius: 1.2rem;
+
+    &:disabled {
+      background: #f0f0f0;
+    }
+  }
+
+  & > textarea {
+    width: 100%;
+    min-height: 24rem;
+    max-height: 48rem;
+    padding: 2.4rem 1.2rem;
+
+    border: 0.1rem solid #000;
+    border-radius: 1.2rem;
+
+    resize: vertical;
+  }
+
+  &--checkbox {
+    & > input {
+      width: 1.6rem;
+      height: 1.6rem;
+      padding: 0;
+
+      border: unset;
+    }
+
+    & > label {
+      position: relative;
+      top: -0.2rem;
+
+      cursor: pointer;
+    }
   }
 }

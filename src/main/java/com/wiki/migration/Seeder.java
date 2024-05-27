@@ -10,8 +10,8 @@ import com.wiki.services.CategoryService;
 
 public class Seeder {
   public static void main(String[] args) throws Exception {
-    runUserSeeder();
-    runCategorySeeder();
+    // runUserSeeder();
+    // runCategorySeeder();
     runArticleSeeder();
   }
 

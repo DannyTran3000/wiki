@@ -43,7 +43,7 @@ public class SingleController extends HttpServlet {
 
     ArticlePublic single = null;
     try {
-      single = ArticleService.readSingle(articleSlug);
+      single = ArticleService.readSingle(articleSlug, true);
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

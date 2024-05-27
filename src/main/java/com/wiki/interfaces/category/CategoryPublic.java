@@ -1,15 +1,22 @@
 package com.wiki.interfaces.category;
 
 public class CategoryPublic {
-  public String name, icon, slug, formatArticleCount;
-  public int articleCount;
+  public String name, icon, slug, createdAt, formatArticleCount;
+  public int id, status, articleCount;
 
-  public CategoryPublic(String name, String icon, String slug, int articleCount) {
+  public CategoryPublic(int id, String name, String icon, String slug, int status, String createdAt, int articleCount) {
+    this.id = id;
     this.name = name;
     this.icon = icon;
     this.slug = slug;
+    this.status = status;
+    this.createdAt = createdAt;
     this.articleCount = articleCount;
     this.formatArticleCount = formatCount(articleCount);
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getName() {
@@ -22,6 +29,14 @@ public class CategoryPublic {
 
   public String getSlug() {
     return slug;
+  }
+
+  public int getStatus() {
+    return status;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
   }
 
   public int getArticleCount() {

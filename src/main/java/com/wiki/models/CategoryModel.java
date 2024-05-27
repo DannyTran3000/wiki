@@ -23,6 +23,11 @@ public class CategoryModel {
     this.createdAt = createdAt;
   }
 
+  public static int deleteCategory(String slug) throws SQLException {
+    String statement = "DELETE FROM category WHERE slug = ?";
+    return Database.update(statement, slug);
+  }
+
   public static int insertCategory(String name, String icon, String slug) throws SQLException {
     String statement = "INSERT INTO category (name, icon, slug) VALUES(?,?,?)";
     return Database.update(statement, name, icon, slug);
@@ -30,15 +35,18 @@ public class CategoryModel {
 
   public static List<CategoryPublic> selectAll() throws SQLException {
     String select = Database.prepareStructureSQL(
-        "SELECT ?,?,?,?",
+        "SELECT ?,?,?,?,?,?,?",
+        "C.id",
         "C.name",
         "C.icon",
         "C.slug",
+        "C.status",
+        "DATE_FORMAT(C.created_at, '%d-%m-%Y') AS created_at",
         "COUNT(A.id) AS article_count");
     String from = "FROM category AS C";
     String join = "LEFT JOIN article AS A ON C.id = A.category_id";
     String where = "WHERE C.status = 1";
-    String rest = "GROUP BY C.id";
+    String rest = "GROUP BY C.id ORDER BY C.created_at DESC";
 
     String statement = select + " " + from + " " + join + " " + where + " " + rest;
     ResultSet resultSet = Database.query(statement);
@@ -46,9 +54,12 @@ public class CategoryModel {
     List<CategoryPublic> categoryList = new ArrayList<>();
     while (resultSet.next()) {
       CategoryPublic category = new CategoryPublic(
+          resultSet.getInt("id"),
           resultSet.getString("name"),
           resultSet.getString("icon"),
           resultSet.getString("slug"),
+          resultSet.getInt("status"),
+          resultSet.getString("created_at"),
           resultSet.getInt("article_count"));
 
       categoryList.add(category);
@@ -69,15 +80,41 @@ public class CategoryModel {
     return name;
   }
 
-  public static String selectCategorySlugById(int id) throws SQLException {
-    String statement = "SELECT slug FROM category WHERE id = ? AND status = 1";
-    ResultSet resultSet = Database.query(statement, id);
+  public static CategoryPublic selectCategoryBySlug(String slug) throws SQLException {
+    String select = Database.prepareStructureSQL(
+        "SELECT ?,?,?,?,?,?,?",
+        "C.id",
+        "C.name",
+        "C.icon",
+        "C.slug",
+        "C.status",
+        "DATE_FORMAT(C.created_at, '%d-%m-%Y') AS created_at",
+        "COUNT(A.id) AS article_count");
+    String from = "FROM category AS C";
+    String join = "LEFT JOIN article AS A ON C.id = A.category_id";
+    String where = "WHERE C.status = 1 AND C.slug = ?";
+    String rest = "GROUP BY C.id";
 
-    String slug = "";
+    String statement = select + " " + from + " " + join + " " + where + " " + rest;
+    ResultSet resultSet = Database.query(statement, slug);
+
+    CategoryPublic category = null;
     while (resultSet.next()) {
-      slug = resultSet.getString("slug");
+      category = new CategoryPublic(
+          resultSet.getInt("id"),
+          resultSet.getString("name"),
+          resultSet.getString("icon"),
+          resultSet.getString("slug"),
+          resultSet.getInt("status"),
+          resultSet.getString("created_at"),
+          resultSet.getInt("article_count"));
     }
 
-    return slug;
+    return category;
+  }
+
+  public static int updateCategory(String name, String icon, String slug) throws SQLException {
+    String statement = "UPDATE category SET name = ?, icon = ? WHERE slug = ?";
+    return Database.update(statement, name, icon, slug);
   }
 }

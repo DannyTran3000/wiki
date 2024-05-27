@@ -1,4 +1,4 @@
-.article {
+.hot-article {
   max-width: 114rem;
   margin: auto;
 
@@ -6,17 +6,8 @@
     min-height: calc(100vh - 28.6rem);
     padding-top: 12rem;
 
-    .article__list-item {
+    .hot-article__list-item {
       max-width: unset;
-    }
-
-    .article-card {
-      align-items: flex-start;
-    }
-
-    .article-card__thumbnail {
-      width: 30rem;
-      padding-top: 30rem;
     }
   }
   

@@ -38,17 +38,20 @@ public class HomeController extends HttpServlet {
     AuthMiddleware.authorize(request, response, null);
 
     // Get latest articles & categories
-    List<ArticlePublic> articles = new ArrayList<>();
+    List<ArticlePublic> highestViewsArticles = new ArrayList<>();
+    List<ArticlePublic> latestArticles = new ArrayList<>();
     List<CategoryPublic> categories = new ArrayList<>();
     try {
-      articles = ArticleService.readLatest();
+      highestViewsArticles = ArticleService.readHighestViewsArticles();
+      latestArticles = ArticleService.readLatestArticles();
       categories = CategoryService.read();
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
-    request.setAttribute("latestArticles", articles);
+    request.setAttribute("highestViewsArticles", highestViewsArticles);
+    request.setAttribute("latestArticles", latestArticles);
     request.setAttribute("categories", categories);
 
     request.getRequestDispatcher("/WEB-INF/components/pages/index.jsp").forward(request, response);

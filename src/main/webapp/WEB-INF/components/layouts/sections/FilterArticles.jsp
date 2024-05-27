@@ -5,9 +5,9 @@
   </div>
   <c:if test="${not empty filterArticles}">
     <ul class="article__list">
-      <c:forEach var="articleCard" items="${filterArticles}">
+      <c:forEach var="articleSecondaryCard" items="${filterArticles}">
         <li class="article__list-item">
-          <%@ include file="../../layouts/cards/ArticleCard.jsp" %>
+          <%@ include file="../../layouts/cards/ArticleSecondaryCard.jsp" %>
         </li>
       </c:forEach>
     </ul>

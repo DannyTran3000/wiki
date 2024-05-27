@@ -316,31 +316,39 @@ resetNoteInputs.forEach(input => {
 // ================================================================================
 // ================================================================================
 // ================================================================================
-const filterArticle = (p) => {
+const filterArticle = (p, pageType = 'none') => {
   const filterForm = document.querySelector('#article-filter-form')
   if (!filterForm) return false
 
   const keywordInput = filterForm.querySelector('input[name="keyword"]')
   const categoryInput = filterForm.querySelector('input[name="category"]')
   const sortInput = filterForm.querySelector('input[name="sort"]')
+  const showHiddenInput = filterForm.querySelector('input[name="show-hidden"]')
 
   const keyword = keywordInput?.value ? `keyword=${keywordInput.value}` : ''
   const category = categoryInput?.value ? `category=${categoryInput.value}` : ''
   const sort = sortInput?.value ? `sort=${sortInput.value}` : ''
+  const showHidden = showHiddenInput?.checked ? 'show-hidden=true' : ''
   const page = `page=${p || 1}`
 
-  const params = [keyword, category, sort, page].filter(item => !!item)
-  const path = `/wiki-portal/articles${params.length > 0 ? `?${params.join('&')}` : ''}`;
+  const params = [keyword, category, sort, showHidden, page].filter(item => !!item)
+
+  const type = filterForm.getAttribute('data-type')
+
+  const isAdmin = [type, pageType].includes('admin')
+  const path = isAdmin
+    ? `/wiki-portal/admin/articles${params.length > 0 ? `?${params.join('&')}` : ''}`
+    : `/wiki-portal/articles${params.length > 0 ? `?${params.join('&')}` : ''}`
 
   window.location.href = path
 
   return false
 }
 
-const paginationArticle = (e) => {
+const paginationArticle = (e, type = 'none') => {
   const page = e.target.getAttribute('data-value')
   if (parseInt(page))
-  filterArticle(parseInt(page))
+  filterArticle(parseInt(page), type)
 }
 
 const resetFilterArticle = () => {
@@ -350,10 +358,12 @@ const resetFilterArticle = () => {
   const keywordInput = filterForm.querySelector('input[name="keyword"]')
   const categoryInput = filterForm.querySelector('input[name="category"]')
   const sortInput = filterForm.querySelector('input[name="sort"]')
+  const showHiddenInput = filterForm.querySelector('input[name="show-hidden"]')
 
   if (keywordInput) keywordInput.value = ""
   if (categoryInput) categoryInput.value = ""
   if (sortInput) sortInput.value = "date"
+  if (showHiddenInput) showHiddenInput.checked = false
 
   const categorySelect = filterForm.querySelector('.select[data-target="category"]')
   if (categorySelect) {
@@ -367,4 +377,177 @@ const resetFilterArticle = () => {
   }
 
   return false
+}
+
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+const createCategory = () => {
+  const form = document.querySelector('#category-detail-form')
+
+  if (!form) {
+    console.log('Warning: Form not found.')
+    return false
+  }
+
+  const nameInput = form.querySelector('input[name="name"]')
+  const iconInput = form.querySelector('input[name="icon"]')
+
+  const name = nameInput?.value
+  const icon = iconInput?.value
+  const data = {name, icon}
+  
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+
+  sendRequest(
+    `/wiki-portal/admin/categories`,
+    'POST',
+    JSON.stringify(data)
+  )
+
+  setTimeout(() => window.location.href = '/wiki-portal/admin/categories', 1500)
+}
+
+const updateCategory = () => {
+  const form = document.querySelector('#category-detail-form')
+
+  if (!form) {
+    console.log('Warning: Form not found.')
+    return false
+  }
+
+  const nameInput = form.querySelector('input[name="name"]')
+  const iconInput = form.querySelector('input[name="icon"]')
+  const slugInput = form.querySelector('input[name="slug"]')
+
+  const name = nameInput?.value
+  const icon = iconInput?.value
+  const slug = slugInput?.value
+  const data = {name, icon}
+  
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+
+  sendRequest(
+    `/wiki-portal/admin/categories/${slug}`,
+    'PUT',
+    JSON.stringify(data)
+  )
+
+  setTimeout(() => window.location.reload(), 1500)
+}
+
+const deleteCategory = (e) => {
+  const slug = e.target?.getAttribute('data-value')
+
+  if (!slug) {
+    console.log('Slug not found!!!')
+    return
+  }
+  
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+
+  sendRequest(`/wiki-portal/admin/categories/${slug}`, 'DELETE')
+
+  setTimeout(() => window.location.reload(), 1500)
+}
+
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+// ================================================================================
+const createArticle = () => {
+  const form = document.querySelector('#article-detail-form')
+
+  if (!form) {
+    console.log('Warning: Form not found.')
+    return false
+  }
+
+  const titleInput = form.querySelector('input[name="title"]')
+  const categoryInput = form.querySelector('input[name="category"]')
+  const thumbnailInput = form.querySelector('input[name="thumbnail"]')
+  const descriptionInput = form.querySelector('textarea[name="description"]')
+  const contentInput = form.querySelector('textarea[name="content"]')
+
+  const title = titleInput?.value
+  const category = parseInt(categoryInput?.value || 0)
+  const thumbnail = thumbnailInput?.value
+  const description = descriptionInput?.value
+  const content = contentInput?.value
+
+  const data = {title, category, thumbnail, description, content}
+  console.log(data)
+  
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+
+  sendRequest(
+    `/wiki-portal/admin/articles`,
+    'POST',
+    JSON.stringify(data)
+  )
+
+  setTimeout(() => window.location.href = '/wiki-portal/admin/articles', 1500)
+}
+
+const updateArticle = () => {
+  const form = document.querySelector('#article-detail-form')
+
+  if (!form) {
+    console.log('Warning: Form not found.')
+    return false
+  }
+
+  const titleInput = form.querySelector('input[name="title"]')
+  const categoryInput = form.querySelector('input[name="category"]')
+  const thumbnailInput = form.querySelector('input[name="thumbnail"]')
+  const descriptionInput = form.querySelector('textarea[name="description"]')
+  const contentInput = form.querySelector('textarea[name="content"]')
+  const showHiddenInput = form.querySelector('input[name="show-hidden"]')
+  const slugInput = form.querySelector('input[name="slug"]')
+
+  const title = titleInput?.value
+  const category = parseInt(categoryInput?.value || 0)
+  const thumbnail = thumbnailInput?.value
+  const description = descriptionInput?.value
+  const content = contentInput?.value
+  const showHidden = showHiddenInput?.checked ? 0 : 1
+  const slug = slugInput?.value
+
+  const data = {title, category, thumbnail, description, content, showHidden}
+  
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+
+  sendRequest(
+    `/wiki-portal/admin/articles/${slug}`,
+    'PUT',
+    JSON.stringify(data)
+  )
+
+  setTimeout(() => window.location.reload(), 1500)
+}
+
+const deleteArticle = (e) => {
+  const slug = e.target?.getAttribute('data-value')
+
+  if (!slug) {
+    console.log('Slug not found!!!')
+    return
+  }
+  
+  const body = document.querySelector('body')
+  body.setAttribute('data-loading', 'true')
+
+  sendRequest(`/wiki-portal/admin/articles/${slug}`, 'DELETE')
+
+  setTimeout(() => window.location.reload(), 1500)
 }

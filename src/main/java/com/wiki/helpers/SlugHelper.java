@@ -59,8 +59,60 @@ public class SlugHelper {
 
       // Extract the slug from the path
       String[] pathParts = path.split("/");
-      if (pathParts.length >= 4) { // Assuming "/wiki-portal/articles/{category}/{slug}" structure
+      if (pathParts.length >= 4) { // Assuming "/wiki-portal/articles/{slug}" structure
         String slug = pathParts[3];
+        return slug;
+      } else {
+        System.out.println("Category or Slug not found in URL.");
+        return "";
+      }
+
+    } catch (MalformedURLException e) {
+      System.err.println("Invalid URL: " + urlString);
+    }
+
+    return "";
+  }
+
+  public static String extractAdminCategorySlug(String urlString) {
+    try {
+      // Create a URL object
+      @SuppressWarnings("deprecation")
+      URL url = new URL(urlString);
+
+      // Get the path
+      String path = url.getPath();
+
+      // Extract the slug from the path
+      String[] pathParts = path.split("/");
+      if (pathParts.length >= 5) { // Assuming "/wiki-portal/admin/categories/{slug}" structure
+        String slug = pathParts[4];
+        return slug;
+      } else {
+        System.out.println("Category or Slug not found in URL.");
+        return "";
+      }
+
+    } catch (MalformedURLException e) {
+      System.err.println("Invalid URL: " + urlString);
+    }
+
+    return "";
+  }
+
+  public static String extractAdminArticleSlug(String urlString) {
+    try {
+      // Create a URL object
+      @SuppressWarnings("deprecation")
+      URL url = new URL(urlString);
+
+      // Get the path
+      String path = url.getPath();
+
+      // Extract the slug from the path
+      String[] pathParts = path.split("/");
+      if (pathParts.length >= 5) { // Assuming "/wiki-portal/admin/articles/{slug}" structure
+        String slug = pathParts[4];
         return slug;
       } else {
         System.out.println("Category or Slug not found in URL.");
